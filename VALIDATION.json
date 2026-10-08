@@ -1,0 +1,1956 @@
+{
+  "layouts": {
+    "results": [
+      {
+        "route": "/about.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-shipped"
+        ]
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-resolved",
+          ""
+        ]
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 320,
+        "scrollWidth": 320,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/about.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          "",
+          "table-actions",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-delivered",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          "",
+          "table-actions",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-shipped",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-shipped",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-active",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "status-badge status-resolved",
+          "",
+          "table-actions",
+          ""
+        ]
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 390,
+        "scrollWidth": 390,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/about.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "danger",
+          "",
+          "",
+          "table-actions"
+        ]
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "",
+          "",
+          "table-actions"
+        ]
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "danger",
+          "",
+          "",
+          "table-actions"
+        ]
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "",
+          "",
+          "table-actions",
+          ""
+        ]
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "danger",
+          "",
+          "",
+          "table-actions"
+        ]
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": [
+          "admin-table",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "table-actions",
+          "",
+          "",
+          "",
+          "table-actions"
+        ]
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 615,
+        "scrollWidth": 615,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/about.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 768,
+        "scrollWidth": 768,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/about.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 1024,
+        "scrollWidth": 1024,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/about.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/account.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-admins.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-careers.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-custom-orders.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-customers.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-dashboard.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-login.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-orders.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-phone-models.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-products.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/admin-queries.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cancel-order.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/careers.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/cart.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/checkout.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/contact.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/copyright.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/customise.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/faq.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/help.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/index.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/login.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/order-confirmation.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/page-directory.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/payment.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/product.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/products.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/returns.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/signup.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/terms.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      },
+      {
+        "route": "/track-orders.html",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "missing": [],
+        "wa": true,
+        "overflow": []
+      }
+    ],
+    "errors": [],
+    "network": [],
+    "failures": []
+  },
+  "flows": {
+    "checks": [
+      "Icon categories, section filtering, search and recovery",
+      "Product gallery, related collection, variants, quantity and cart",
+      "Cart quantity, removal and demo discount",
+      "Frontend payment handoff, confirmation, tracking and cancellation recovery",
+      "Help and contact queries create tickets and prepare the correct WhatsApp chat",
+      "Customer profile persistence, separate admin login and six dashboard metrics",
+      "Admin customer create, edit and delete",
+      "Admin Head CRUD, last-head protection and staff read-only admin view",
+      "Career drafts, publishing, image upload, public role details and deletion",
+      "Support resolution, customer ticket notes, order status tracking, custom-order views and CSV export",
+      "Blank-canvas file picker, image/text/sticker layers, free placement, keyboard, undo, PNG export and custom cart",
+      "All 13 realistic products support both sides; saved design restores",
+      "Mobile storefront navigation, admin drawer, and responsive CRUD dialog"
+    ],
+    "errors": [],
+    "teamRevision": "Team content rechecked in requestCoverage after founder/partner update."
+  },
+  "states": {
+    "checks": [
+      "Touch gesture moves a design layer on mobile",
+      "Filled cart, checkout, updated three-person team and phone model controls fit 320\u20131440px",
+      "Empty cart and checkout recover to the catalogue",
+      "Unknown admin login displays a useful recovery message",
+      "Every static internal page, script, stylesheet and image reference resolves",
+      "Direct file preview exports the print package without canvas cross-origin failures"
+    ],
+    "errors": [],
+    "links": []
+  },
+  "breakpoints": {
+    "checks": [
+      "Key layouts fit 699px around column/menu breakpoints",
+      "Key layouts fit 700px around column/menu breakpoints",
+      "Key layouts fit 959px around column/menu breakpoints",
+      "Key layouts fit 960px around column/menu breakpoints",
+      "320px mobile menu exposes customer and admin login",
+      "Signed-in mobile menu points to the customer account"
+    ],
+    "errors": []
+  },
+  "requestCoverage": {
+    "pages": [
+      "index",
+      "products",
+      "product",
+      "customise",
+      "cart",
+      "checkout",
+      "payment",
+      "order-confirmation",
+      "track-orders",
+      "cancel-order",
+      "help",
+      "about",
+      "contact",
+      "careers",
+      "faq",
+      "returns",
+      "terms",
+      "copyright",
+      "login",
+      "signup",
+      "account",
+      "admin-login",
+      "admin-dashboard",
+      "admin-customers",
+      "admin-admins",
+      "admin-orders",
+      "admin-queries",
+      "admin-custom-orders",
+      "admin-careers",
+      "admin-products",
+      "admin-phone-models"
+    ],
+    "checks": [
+      "All 31 requested application pages exist and are linked from the review directory",
+      "Every requested product section has All, New Arrivals and its product icons",
+      "All 13 products open complete details, gallery, cart actions and more-from-collection",
+      "Dedicated payment page supports method states, delivery recovery and credential-free preview",
+      "Payment and directory fit 320\u20131440px, including both sides of responsive breakpoints",
+      "Invalid coupon replaces a previous discount and refreshes visible totals"
+    ],
+    "errors": [],
+    "teamRevision": {
+      "method": "Static HTML and responsive CSS inspection after copy-only update",
+      "checks": [
+        "Exactly two team cards: Mariam Parvez \u2014 Co Founder; Imran Roshan \u2014 Senior Partner.",
+        "Two-column desktop grid retains existing single-column mobile rule."
+      ],
+      "browserRecheck": "Headless browser could not launch in current sandbox; prior unchanged-page checks retained."
+    }
+  },
+  "authPrintCatalogue": {
+    "checks": [
+      "Welcome back has no name; unknown email displays recovery",
+      "Social provider previews show an explicit demo choice and create a demo session",
+      "Name + phone + OTP signup rejects wrong code and creates an isolated phone account",
+      "Phone account owns its orders by customer ID and profile edits preserve order links",
+      "Phone login normalises +91 and blocks inactive accounts",
+      "Admin product add/edit/delete updates prices, variants, designer collections and store visibility",
+      "Admin-added Android models and front/back photos appear in the customer phone selector",
+      "Unlisted phone name and design stay in the cart and become an admin model request",
+      "Print ZIP exports both sides as 6000px transparent 300DPI PNG/SVG and retains exact original bytes",
+      "Admin preview download renders the selected side at 6000px and 300DPI",
+      "Sample orders without artwork cannot download a misleading print file",
+      "Legacy compressed uploads receive an explicit quality warning",
+      "Auth, catalogue admin and phone selection fit mobile, tablet and desktop"
+    ],
+    "errors": []
+  },
+  "scope": "Frontend only. Browser demo data. No live authentication, payments or order service.",
+  "team": {
+    "coFounder": "Mariam Parvez",
+    "seniorPartner": "Imran Roshan"
+  }
+}

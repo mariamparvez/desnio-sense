@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin-
+Disallow: /account.html
+Disallow: /checkout.html
+Disallow: /payment.html
+Disallow: /order-confirmation.html
+Disallow: /page-directory.html
