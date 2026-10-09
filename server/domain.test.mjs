@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {priceOrder,orderKey,image,catalogueRecord,canCancel} from './domain.mjs';
+const product={id:'tshirt',title:'T-shirt',status:'Active',price:599,stock:3,variants:['M'],image:'tshirt'};
+const item={product:'tshirt',quantity:1,variant:'M',colour:'Ivory',price:.01,custom:false};
+test('Pricing uses the catalogue and ignores browser totals',()=>{assert.equal(priceOrder([{...item,quantity:2}],[product]).total,1198);});
+test('Splitting quantities across lines cannot bypass available stock',()=>{assert.throws(()=>priceOrder([{...item,quantity:2},{...item,quantity:2}],[product]),/stock/);});
+test('Unavailable products and unsupported options fail closed',()=>{assert.throws(()=>priceOrder([item],[{...product,status:'Draft'}]));assert.throws(()=>priceOrder([{...item,variant:'XXL'}],[product]));assert.throws(()=>priceOrder([{...item,quantity:1.5}],[product]));});
+test('Custom submissions require durable originals',()=>{assert.throws(()=>priceOrder([{...item,custom:true}],[product]),/permanent original artwork/);});
+test('A checkout key is bound to the customer identity',()=>{const key='12345678-1234-1234-1234-123456789012';assert.equal(orderKey('one',key),orderKey('one',key));assert.notEqual(orderKey('one',key),orderKey('two',key));assert.throws(()=>orderKey('one','invalid'));});
+test('Image URLs cannot escape attributes or select executable content',()=>{for(const url of ['javascript:alert(1)','https://example.com/" onerror="alert(1)','assets/../secret','data:image/svg+xml,<svg/>'])assert.throws(()=>image(url));assert.equal(image('assets/products/tshirt.jpg'),'assets/products/tshirt.jpg');});
+test('Client role and payment fields never enter catalogue records',()=>{const result=catalogueRecord('phoneModels',{platform:'iPhone',brand:'Ignored',name:'iPhone 15',status:'Active',adminHead:true,payment:'Paid'},'phone-test');assert.equal(result.brand,'Apple');assert(!('adminHead'in result));assert(!('payment'in result));});
+test('Late or in-production custom orders require support cancellation',()=>{assert(canCancel({status:'Placed',custom:true}));assert(!canCancel({status:'Processing',custom:true}));assert(!canCancel({status:'Shipped',custom:false}));});

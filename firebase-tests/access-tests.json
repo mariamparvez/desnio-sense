@@ -13,7 +13,35 @@
           "data": {
             "status": "Active"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -27,7 +55,35 @@
           "data": {
             "status": "Draft"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -55,10 +111,38 @@
           "data": {
             "status": "Active"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
-        "expectation": "ALLOW",
+        "expectation": "DENY",
         "pathEncoding": "PLAIN",
         "request": {
           "path": "/databases/(default)/documents/products/tshirt",
@@ -84,7 +168,35 @@
           "data": {
             "status": "Active"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -105,7 +217,35 @@
           "data": {
             "status": "Active"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "ALLOW",
@@ -123,7 +263,35 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -141,7 +309,35 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -164,7 +360,35 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -188,10 +412,38 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
-        "expectation": "ALLOW",
+        "expectation": "DENY",
         "pathEncoding": "PLAIN",
         "request": {
           "path": "/databases/(default)/documents/admins/new-admin",
@@ -213,7 +465,35 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "ALLOW",
@@ -233,7 +513,35 @@
           "data": {
             "customerId": "customer-1"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -253,7 +561,35 @@
           "data": {
             "customerId": "customer-2"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -279,7 +615,35 @@
           "data": {
             "customerId": "customer-1"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -306,7 +670,35 @@
           "data": {
             "customerId": "customer-1"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "ALLOW",
@@ -326,7 +718,35 @@
           "data": {
             "customerId": "customer-1"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -346,7 +766,35 @@
           "data": {
             "customerId": "customer-2"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "ALLOW",
@@ -360,7 +808,35 @@
           "data": {
             "status": "Published"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -374,7 +850,35 @@
           "data": {
             "status": "Draft"
           }
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "expectation": "DENY",
@@ -394,7 +898,521 @@
         },
         "resource": {
           "data": {}
-        }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/carts/customer-1",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/carts/customer-2",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/designs/customer-2",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/applications/new",
+          "method": "create",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "customerId": "customer-1"
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/applications/test",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/tickets/test",
+          "method": "update",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "status": "Resolved"
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/rateLimits/test",
+          "method": "get",
+          "auth": {
+            "uid": "head-1",
+            "token": {
+              "email": "head@example.test",
+              "email_verified": true,
+              "admin": true,
+              "adminHead": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/designs/customer-1",
+          "method": "create",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "uid": "customer-1",
+              "draft": {},
+              "originalsStored": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Active"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/orders/own",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Inactive"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/users/customer-1",
+          "method": "get",
+          "auth": {
+            "uid": "admin-1",
+            "token": {
+              "email": "admin@example.test",
+              "email_verified": true,
+              "admin": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        },
+        "functionMocks": [
+          {
+            "function": "exists",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": true
+            }
+          },
+          {
+            "function": "get",
+            "args": [
+              {
+                "anyValue": {}
+              }
+            ],
+            "result": {
+              "value": {
+                "data": {
+                  "status": "Inactive"
+                }
+              }
+            }
+          }
+        ]
       }
     ]
   },
@@ -402,13 +1420,13 @@
     "Public active catalogue",
     "Private draft catalogue",
     "Customer cannot change catalogue",
-    "Admin can update catalogue",
+    "Admin cannot bypass catalogue server",
     "Unverified admin blocked",
     "Own profile visible",
     "Other profile private",
     "Customer cannot grant admin",
     "Admin cannot grant admin",
-    "Head directory management",
+    "Head cannot bypass account server",
     "Own order visible",
     "Other order private",
     "Customer cannot mark paid",
@@ -417,6 +1435,16 @@
     "Other support ticket private",
     "Published jobs visible",
     "Draft jobs private",
-    "Unexpected collection closed"
+    "Unexpected collection closed",
+    "Own cart private",
+    "Other cart private",
+    "Other design private",
+    "Customer cannot fabricate application",
+    "Own application visible",
+    "Customer cannot resolve ticket",
+    "Rate limits private",
+    "Original artwork flags cannot be fabricated",
+    "Inactive user cannot read order",
+    "Disabled admin cannot read customers"
   ]
 }

@@ -6,7 +6,7 @@ if(path.dirname(output)!==root||path.basename(output)!=='dist')throw new Error('
 await fs.rm(output,{recursive:true,force:true});
 await fs.mkdir(output,{recursive:true});
 for(const entry of await fs.readdir(root,{withFileTypes:true})){
- if(entry.isFile()&&(/\.(html|css|js)$/.test(entry.name)||entry.name==='robots.txt'))await fs.copyFile(path.join(root,entry.name),path.join(output,entry.name));
+ if(entry.isFile()&&(/\.(html|css|js)$/.test(entry.name)||entry.name==='backend.mjs'||entry.name==='robots.txt'))await fs.copyFile(path.join(root,entry.name),path.join(output,entry.name));
  if(entry.isDirectory()&&entry.name==='assets')await fs.cp(path.join(root,'assets'),path.join(output,'assets'),{recursive:true});
 }
 console.log('Built Desnio Sense static frontend in dist/.');

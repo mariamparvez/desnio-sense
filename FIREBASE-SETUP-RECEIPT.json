@@ -1,6 +1,6 @@
 {
   "project": "desniosense",
-  "checkedAt": "2026-10-09T01:45:50.968Z",
+  "checkedAt": "2026-10-09T03:49:02.337Z",
   "database": {
     "name": "projects/desniosense/databases/(default)",
     "location": "asia-south1",
@@ -23,8 +23,8 @@
   },
   "security": {
     "rulesMatch": true,
-    "sha256": "a9ab145b368adab3ffb4c6eae6b11b571ddf7cc2168ad10d412d5bf49ce85acb",
-    "ruleset": "projects/desniosense/rulesets/f11b5739-da90-44ac-b56e-5137d86bbf2a",
+    "sha256": "6a951d3a7115c82ee1062699d625313360ac8a2d7849cfdabb43bcfcc4344f1f",
+    "ruleset": "projects/desniosense/rulesets/7b39f10b-4a3e-4cb3-bdb0-872a812e9f1f",
     "anonymousAdminReadDenied": true,
     "anonymousOrderReadDenied": true
   }

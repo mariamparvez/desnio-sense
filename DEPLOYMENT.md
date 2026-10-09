@@ -1,6 +1,6 @@
 # Desnio Sense — GitHub → Vercel → desniosense.com
 
-The frontend is ready for this deployment path. It has not yet been published to Vercel or connected to the domain. The owner selected the private repository `mariamparvez/desnio-sense`, and GitHub repository read/write access is verified. The owner handles GoDaddy DNS.
+The production storefront is hosted at https://desnio-sense.vercel.app/ through the GitHub integration. The custom domain requires the owner’s DNS configuration. The owner selected the private repository `mariamparvez/desnio-sense`, and GitHub repository read/write access is verified. The owner handles GoDaddy DNS.
 
 ## Account connections
 
@@ -20,13 +20,14 @@ Use only the contents of Desnio-Sense-Website as the repository root. The full t
 - Build Command: `npm run build`.
 - Output Directory: `dist`.
 - Node: **22**.
-- No npm dependencies are required for this frontend build.
+- Install the locked Node dependencies for the Firebase/Vercel API.
 - Keep `.html` routes; vercel.json deliberately does not use a single-page application rewrite.
 
 Local preparation:
 
 ```text
 node scripts/check.mjs
+node --test server/domain.test.mjs
 node scripts/build.mjs
 ```
 

@@ -1,66 +1,36 @@
-# Firebase setup status
+# Firebase setup and verification
 
-Firebase project administration completed on 9 October 2026 using the owner's
-Google consent. No console steps are required from the owner for this setup.
+Configured using the owner's Google consent on 9 October 2026. No service-account private key, generated owner password or billing activation was required.
 
-## Deployed and verified
+## Infrastructure
 
-- Project: `desniosense`; Google account: `designwithmariam@gmail.com`.
-- Standard `(default)` Cloud Firestore database in Mumbai (`asia-south1`).
-- The database is eligible for the free tier; project billing remains disabled.
-- Database deletion protection enabled. No paid backups or point-in-time recovery.
-- 13 products imported from the existing website, retaining **Preview** prices.
-- 58 starter phone models imported. These are not a complete all-phones database;
-  production templates remain unverified until a supplier supplies them.
-- Google and Email/Password sign-in enabled.
-- Phone sign-in disabled as requested for Phase 2; Facebook remains deferred.
-- Login domains authorized: `desnio-sense.vercel.app`, `desniosense.com`,
-  `www.desniosense.com`, `localhost`, `127.0.0.1`, and the Firebase project domains.
-  Authorizing a domain does not configure DNS or publish the site on that domain.
-- Mariam's Firebase Auth account has trusted `admin: true` and `adminHead: true`
-  custom claims, and an Admin Head directory record. No password was generated.
-  Admin access requires a verified Firebase sign-in; the prepared account's email
-  becomes verified through Google sign-in. No client email whitelist grants roles.
-- `firestore.rules` deployed; the remote ruleset matches this source byte for byte.
-- All 19 remote access-rule tests passed. Anonymous catalogue queries returned
-  the expected counts; private admin and order reads were rejected.
+- Project `desniosense`, owned through `designwithmariam@gmail.com`.
+- Default Standard Cloud Firestore database in Mumbai (`asia-south1`), free-tier eligible. Billing remains disabled; deletion protection is enabled. No paid backups, Cloud Storage or Cloud Functions were enabled.
+- 13 catalogue products with preview prices, and 58 starter phone models. Phone coverage and production fit remain supplier-maintained, not exhaustive or verified.
+- Google and Email/Password providers enabled. Phone login disabled; phone OTP and Facebook remain Phase 2.
+- Authorized domains include `desnio-sense.vercel.app`, `desniosense.com`, `www.desniosense.com`, localhost/127.0.0.1 and Firebase project domains. This does not configure domain DNS.
+- Admin Head `designwithmariam@gmail.com` has trusted admin and adminHead claims. Use Google sign-in. The prepared account requires verified sign-in; no demo password grants access.
+- Vercel API uses a production-scoped Google workload identity, limited to this team/project/environment. Its service account has datastore user and Firebase Auth admin roles. There are no private service-account keys.
 
-See `FIREBASE-SETUP-RECEIPT.json` for the database, verification time, ruleset ID
-and source digest. It contains no tokens, passwords or private keys.
+## Connected application
 
-## Data access
+Authentication, profiles, customer/admin management, catalogue/designer merchandise, phone-model management/requests, jobs/applications, support/contact tickets, subscriptions, customer carts, draft metadata and standard unpaid order requests now persist to Firebase.
 
-The rules cover `users`, `admins`, `products`, `phoneModels`, `phoneModelRequests`,
-`jobs`, `tickets`, and `orders`. Empty collections appear in the console when the
-first genuine record is written. No fake customers, tickets or orders were imported.
+The API verifies identity, current disabled state and admin claims. Admin Head changes are protected, the owner cannot be removed, and removing an account disables access while preserving historical orders. Private reads require ownership or an active verified admin directory record. Sensitive client writes are denied; authorized server actions enforce validation, pricing, stock checks, rate limits and checkout idempotency.
 
-Public users can read active products/models and published jobs. Signed-in customers
-can manage their own validated profile and submit their own support/model requests.
-Customers can read their own orders; administrators can read store operations.
-Only trusted authentication claims allow administrative catalogue/job changes.
-The Admin Head can manage the admin directory; editing a directory record does not
-grant authentication claims. Orders and payments require trusted server processing:
-browser code cannot create a paid order or change payment totals/states.
+Cart and editable draft metadata can sync across browsers. Originals remain local; drafts explicitly carry originalsStored=false. Custom submission is blocked until permanent artwork storage is available. Payments are disabled and unpaid requests cannot enter production/shipping or be marked Paid from a form. WhatsApp ticket links prepare a message for the customer to send.
 
-## Website integration still pending
+## Evidence
 
-The published website still uses the frontend demo adapter. Creating this database
-and granting Firebase claims does **not** convert its demo logins, local records,
-checkout or admin pages into a live backend. The public SDK configuration is saved
-in `firebase-config.js`; it is not yet connected to the page controllers.
+- All 29 remote Firestore access-rule cases passed, including disabled accounts, private carts/designs, client role/payment bypasses and private applications.
+- Eight automated server-domain security/validation tests pass with `npm test`.
+- Actual Firebase API and Chrome browser integration results are recorded in `firebase-tests/integration-receipt.json`. Tests use temporary identities and explicitly remove fixtures; they do not automate the owner's Google consent or charge money.
+- `FIREBASE-SETUP-RECEIPT.json` verifies the deployed rules digest, database region/free tier, disabled billing, seed counts and rejected anonymous private reads.
 
-Next implementation work is the real Auth/Firestore adapter, removal of demo login
-bypasses, and authenticated page/CRUD integration. Payments need server-created
-Razorpay orders and verified webhooks. Durable original artwork storage, Phone OTP,
-and Facebook authentication remain separate Phase 2 work. Vercel remains the host;
-Firebase Hosting, billing, Cloud Storage and Cloud Functions were not enabled.
-
-## Re-deploy rules
-
-With the official Firebase CLI signed in to the owner account, from this directory:
+Re-deploy rules from this directory after an owner Firebase CLI login:
 
 ```text
 firebase deploy --only firestore --project desniosense
 ```
 
-Keep OAuth credentials outside this website directory and the Git repository.
+Keep OAuth credentials outside the repository. See BACKEND-HANDOFF.md for payments, artwork storage and remaining next-phase integrations.

@@ -1,36 +1,38 @@
-# Firebase backend handoff
+# Backend state and next phase
 
-Firebase Authentication and Firestore infrastructure are now configured and secured. See `FIREBASE-SETUP.md` for the verified deployed state. Website controllers still use the frontend demo adapter; live application integration is pending. Vercel hosts the site. Cloud Storage and server functions remain deferred until their backend and billing requirements are resolved.
+Firebase Authentication and Firestore are connected to the storefront and admin portal. The Vercel API verifies Firebase ID tokens, current account state and custom claims. Clients cannot directly change orders, payments, roles, catalogue records, tickets, job applications, model requests or subscriptions.
 
-## Information to provide
+## Persisted flows
 
-- Public web-app `firebaseConfig` from Project settings → Your apps → Web SDK configuration.
-- Firebase project ID and selected Firestore/Storage region.
-- Admin Head email, intended live domain, and development/preview domains.
-- Later: Razorpay account/test mode setup and Facebook developer-app configuration, through protected account/environment settings.
+| Area | Collections / service | Behavior |
+| --- | --- | --- |
+| Accounts | Firebase Auth, users | Google/email signup and login, verification, reset password, profile, disabled-account checks |
+| Admin team | admins, Auth custom claims | Head-only changes, owner/last-head protection, revocation and audit |
+| Catalogue | products, phoneModels | Validated admin CRUD, designer records, compressed display images and model templates |
+| Careers | jobs, applications | Published public roles, private applications, admin view |
+| Support / contact | tickets | Authenticated queries, private history, resolution/notes, WhatsApp draft link |
+| Cart / studio | carts, designs | Per-user cart and draft metadata sync; originalsStored is always false |
+| Order requests | orders, orderLimits | Verified email, server prices/options/stock validation, customer-bound idempotency, pending payment, cancellation |
+| Newsletter | subscribers | Authenticated email and explicit subscription consent |
+| Phone requests | phoneModelRequests | Android/iPhone metadata and admin conversion to catalogue |
+| Server controls | rateLimits, audit, system | Per-user rate limits, administrative audit and serialized account changes |
 
-Do not provide Google passwords or private service-account JSON in chat. Billing activation is the owner’s decision; Firebase Cloud Storage requires Blaze. Add a budget alert and review SMS/upload usage.
+Collections are created as records are needed, rather than populated with fake customers/orders. Temporary test fixtures are cleaned up. Historical order snapshots are retained when a catalogue entry is removed or an account is disabled.
 
-## Connect the frontend adapter
+## Infrastructure
 
-| Current module | Backend responsibility |
-| --- | --- |
-| auth.js, pages.js | Real Google/Facebook/email/phone auth, OTP/reCAPTCHA, linked identities, profiles |
-| data.js | Replace browser Store/DS with authenticated reads/writes and stable customer IDs |
-| admin.js, admin-catalogue.js | Server-enforced Admin/Admin Head permissions, catalogue/customer/admin/jobs CRUD and order/ticket status |
-| phone-catalogue.js | Shared supplier-maintained model catalogue, search, photos, case templates, requests |
-| artwork-store.js, studio.js | Original uploads to Cloud Storage; preview derivatives, editable scene documents, asset references |
-| design-export.js | Durable source retrieval and server-assisted export for large files |
-| commerce.js | Server prices/stock/coupons, order IDs, Razorpay order creation, signature/webhook verification, fulfilment |
+Project `desniosense`; default Standard Firestore in `asia-south1`, free-tier eligible, billing disabled and deletion protection enabled. Google and Email/Password providers enabled. Admin Head uses `designwithmariam@gmail.com`. Phone and Facebook login remain disabled/deferred.
 
-Suggested collections: users, products, phoneModels, phoneModelRequests, designs, orders, tickets, jobs. Store original image files in Storage, not Firestore documents; persist references and editable layer metadata. Track requested phone model and supplier template version in each custom order.
+The API service account is `desnio-store-api@desniosense.iam.gserviceaccount.com`. Its access is through Workload Identity Federation: pool `desnio-vercel`, provider `vercel`, issuer `https://oidc.vercel.com/mariamparvezs-projects`, audience `https://vercel.com/mariamparvezs-projects`, exact subject `owner:mariamparvezs-projects:project:desnio-sense:environment:production`. It has datastore user and Firebase Auth admin access. No private key was created. Preview environments do not get production identity access.
 
-Use Firebase Authentication custom claims for Admin and Admin Head. Customers may access their own profiles/designs/orders/tickets; clients must not choose their own role, mark payments paid or change order totals. Validate inventory and prices in server transactions. Use a server webhook to confirm Razorpay payment rather than trusting the frontend success callback.
+## Explicitly deferred by the owner
 
-## Phone catalogue and MCP
+Payments: obtain Razorpay keys through protected backend configuration. Add server-created payment orders, verified signatures/webhooks, inventory reservations, refunds and idempotent payment events before accepting money. Do not change Pending to Paid from a form or trust browser totals.
 
-The frontend includes a starter catalogue and manual-model requests. It does not claim complete coverage of every phone or verified case dimensions. Import a licensed/supplier-supported catalogue; include platform, brand, model, variant, camera cut-outs, dimensions, photos and production template version. The owner/admin can add missing models.
+Original artwork: the owner selected the free Firebase plan. Custom submission is therefore blocked. Add durable original byte storage, ownership rules, upload type/size validation, source checksums, asset references, original retrieval and source-quality checks before enabling custom orders. Existing local originals do not sync through Firestore. Compressed catalogue images and draft previews are display assets, never production originals.
 
-The official Firebase MCP manages your Firebase project; the official Vercel MCP manages hosting. Neither is an all-phones database. If you still want a dedicated phone-catalogue MCP, build it over your shared database in the backend phase, with tools such as search_phone_models, get_phone_template, submit_model_request and authorized upsert_phone_model. Public store pages call the normal API/database adapter; agents may use the MCP interface. Do not expose unauthenticated admin writes.
+Phone OTP, Facebook, shipping/tax services, outbound email/WhatsApp notifications, production template verification and merchant-approved policies remain next-phase work. The current phone database is not an exhaustive all-phones service. A dedicated catalogue MCP can later sit over supplier-maintained records; normal store operations use the application API.
 
-References: [Web setup](https://firebase.google.com/docs/web/setup), [Phone authentication](https://firebase.google.com/docs/auth/web/phone-auth), [Security rules](https://firebase.google.com/docs/rules/basics), [Storage](https://firebase.google.com/docs/storage/web/start), [Firebase MCP](https://firebase.google.com/docs/ai-assistance/mcp-server), [Razorpay standard integration](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/).
+## Validation
+
+`npm run check`, `npm test`, `npm run build`; rules cases in `firebase-tests/access-tests.json`; sanitized integration receipt in `firebase-tests/integration-receipt.json`. Private test credentials and owner OAuth files remain outside the repository. Tests cover actual Firebase reads/writes and browser flows using temporary identities; they do not automate the owner's Google consent or process real payments.
