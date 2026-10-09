@@ -39,8 +39,8 @@ In the selected Vercel project, add `desniosense.com` and `www.desniosense.com` 
 
 [Official domain setup](https://vercel.com/docs/domains/working-with-domains/add-a-domain)
 
-## What the frontend deployment does
+## Backend deployment
 
-The pages are online and usable as a prototype. Demo OTP is `123456`; Google/Facebook use explicitly labelled demo profiles; email/admin preview passwords are not checked. Every browser/device has its own local records and uploads. No live OTP, payment, durable shared orders, true admin authorization or backend phone-catalogue service is running yet.
+Firebase Authentication and Firestore power customer accounts, verified admin roles, product and phone-model management, carts, draft metadata, unpaid order requests, cancellations, tickets and careers. The Vercel API uses the production project's federated identity; no service-account private key is stored in GitHub or the browser. See BACKEND-HANDOFF.md and firebase-tests/ for the scope and verification evidence. Check the deployed API health and authenticated flows after every backend release; a successful static build alone does not prove backend availability.
 
-The high-resolution print workflow rebuilds 6000px transparent PNG/SVG artwork and preserves uploaded originals locally. Moving to the deployed origin does not automatically move old localhost originals. Download print packages before clearing browser data; Firebase Storage will provide durable originals after backend integration.
+The owner selected the free Firebase plan and disabled payments. Standard checkout saves unpaid requests. Phone OTP and Facebook are deferred. Custom-order submission remains blocked until durable original artwork storage is enabled. The studio preserves uploaded originals locally and can export print packages; moving to the deployed origin does not move localhost originals. Download print packages before clearing browser data.
