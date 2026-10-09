@@ -1,6 +1,6 @@
 {
   "project": "desniosense",
-  "checkedAt": "2026-10-09T04:58:11.088Z",
+  "checkedAt": "2026-10-09T06:37:47.212Z",
   "database": {
     "name": "projects/desniosense/databases/(default)",
     "location": "asia-south1",
@@ -26,6 +26,9 @@
     "sha256": "6a951d3a7115c82ee1062699d625313360ac8a2d7849cfdabb43bcfcc4344f1f",
     "ruleset": "projects/desniosense/rulesets/7b39f10b-4a3e-4cb3-bdb0-872a812e9f1f",
     "anonymousAdminReadDenied": true,
-    "anonymousOrderReadDenied": true
+    "anonymousOrderReadDenied": true,
+    "appCheckFirestore": "ENFORCED",
+    "appCheckApiMutations": "ENFORCED",
+    "securityVerifiedAt": "2026-10-09T09:03:45.625Z"
   }
 }

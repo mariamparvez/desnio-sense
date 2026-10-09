@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-09T09:05:34.670Z",
+  "origin": "https://desniosense.com",
+  "inlineScriptBlocked": true,
+  "inlineHandlerBlocked": true,
+  "arbitraryConnectionBlocked": true,
+  "violations": [
+    "script-src-elem",
+    "script-src-attr",
+    "connect-src"
+  ]
+}

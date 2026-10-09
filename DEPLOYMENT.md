@@ -1,6 +1,6 @@
 # Desnio Sense — GitHub → Vercel → desniosense.com
 
-The production storefront is hosted at https://desnio-sense.vercel.app/ through the GitHub integration. The custom domain requires the owner’s DNS configuration. The owner selected the private repository `mariamparvez/desnio-sense`, and GitHub repository read/write access is verified. The owner handles GoDaddy DNS.
+The production storefront is hosted at https://desnio-sense.vercel.app/ through the GitHub integration. Both desniosense.com and www.desniosense.com serve the matching production site over HTTPS; all 32 pages and backend health were verified on each. The owner continues to manage DNS. The owner selected the private repository `mariamparvez/desnio-sense`, and GitHub repository read/write access is verified. The owner handles GoDaddy DNS.
 
 ## Account connections
 
@@ -48,3 +48,7 @@ The owner selected the free Firebase plan and disabled payments. Standard checko
 ## Verified Firebase release
 
 The production backend source revision `8b4571d69974ac149fb940fd434a6e0750cc71e8` passed GitHub checks, deployed through the existing Vercel Git integration, and passed all 27 live Firebase/browser integration checks. See `firebase-tests/production-receipt.json`. API health reports ready; anonymous mutation attempts return 401. Temporary test identities and their records were removed. Payments, permanent artwork storage, phone OTP and Facebook remain disabled.
+
+## Security release
+
+Security source revision `fb163396a7846c15c9bedd716305b2b4d20b9cb6` passed GitHub CI and deployed through Vercel (deployment `7fJXVAL9uth5TGGqBB2hBB5HEVmk`). It passed 35 local integration/attack checks, 36 live integration/attack checks and 12 server tests. The dependency audit reports zero known vulnerabilities. Production API mutations and Firestore enforce App Check; real attestation works on both custom-domain addresses. Browser injection attempts were blocked, all three production origins serve matching source and security headers, and all temporary test identities and attestation registrations were removed. See SECURITY.md and security-tests/. Firebase billing remains disabled. Owner account MFA and domain transfer lock require owner setup and are not claimed as configured.

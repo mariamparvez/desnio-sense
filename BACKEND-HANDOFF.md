@@ -36,3 +36,7 @@ Phone OTP, Facebook, shipping/tax services, outbound email/WhatsApp notification
 ## Validation
 
 `npm run check`, `npm test`, `npm run build`; rules cases in `firebase-tests/access-tests.json`; sanitized integration receipt in `firebase-tests/integration-receipt.json`. Private test credentials and owner OAuth files remain outside the repository. Tests cover actual Firebase reads/writes and browser flows using temporary identities; they do not automate the owner's Google consent or process real payments.
+
+## Production security hardening
+
+App Check is enforced on production API mutations and Firestore. The registered reCAPTCHA Enterprise provider is restricted to the three production hostnames, with 24-hour tokens and a 0.5 risk threshold. Backend authorization still checks current verified identity, revocation, directory status and roles. New public submissions require verified email and have daily limits. The public Firebase configuration is not an administrator credential. Billing remains disabled; attestation quota exhaustion fails closed. Follow SECURITY.md and security-tests/ for verified scope and owner account responsibilities.

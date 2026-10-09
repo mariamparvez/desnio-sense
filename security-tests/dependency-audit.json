@@ -1,0 +1,12 @@
+{
+  "knownVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "lockfile": "package-lock.json",
+  "testedSourceRevision": "fb163396a7846c15c9bedd716305b2b4d20b9cb6"
+}
