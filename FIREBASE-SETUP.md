@@ -24,6 +24,7 @@ Cart and editable draft metadata can sync across browsers. Originals remain loca
 
 - All 29 remote Firestore access-rule cases passed, including disabled accounts, private carts/designs, client role/payment bypasses and private applications.
 - Eight automated server-domain security/validation tests pass with `npm test`.
+- All 27 integration checks also passed against the live Vercel production origin, using the federated server identity; see `firebase-tests/production-receipt.json`.
 - Actual Firebase API and Chrome browser integration results are recorded in `firebase-tests/integration-receipt.json`. Tests use temporary identities and explicitly remove fixtures; they do not automate the owner's Google consent or charge money.
 - `FIREBASE-SETUP-RECEIPT.json` verifies the deployed rules digest, database region/free tier, disabled billing, seed counts and rejected anonymous private reads.
 

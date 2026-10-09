@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-09T04:47:21.936Z",
+  "at": "2026-10-09T06:27:33.786Z",
   "checks": [
     "Authenticated backend connects to Firestore",
     "Anonymous access and customer role escalation blocked",
