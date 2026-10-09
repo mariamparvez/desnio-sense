@@ -1,6 +1,6 @@
 # Firebase backend handoff
 
-No backend is implemented in this release. The planned stack is Vercel hosting + Firebase Authentication, Firestore, Cloud Storage, and server functions for privileged actions/payments.
+Firebase Authentication and Firestore infrastructure are now configured and secured. See `FIREBASE-SETUP.md` for the verified deployed state. Website controllers still use the frontend demo adapter; live application integration is pending. Vercel hosts the site. Cloud Storage and server functions remain deferred until their backend and billing requirements are resolved.
 
 ## Information to provide
 

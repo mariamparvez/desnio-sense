@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owner(uid) { return signedIn() && request.auth.uid == uid; }
+    function admin() {
+      return signedIn() && request.auth.token.get('email_verified', false) == true
+        && request.auth.token.get('admin', false) == true;
+    }
+    function head() {
+      return admin() && request.auth.token.get('adminHead', false) == true;
+    }
+    function shortText(value, maximum) { return value is string && value.size() <= maximum; }
+    function validProfile(uid) {
+      let d = request.resource.data;
+      return d.keys().hasAll(['uid', 'name', 'email', 'phone', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['uid', 'name', 'email', 'phone', 'createdAt', 'updatedAt'])
+        && d.uid == uid && d.email == request.auth.token.email
+        && shortText(d.name, 100) && shortText(d.email, 254) && shortText(d.phone, 24)
+        && d.createdAt is timestamp && d.updatedAt == request.time;
+    }
+    match /users/{uid} {
+      allow get: if owner(uid) || admin();
+      allow list: if admin();
+      allow create: if owner(uid) && validProfile(uid) && request.resource.data.createdAt == request.time;
+      allow update: if owner(uid) && validProfile(uid)
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if head();
+    }
+    match /admins/{uid} {
+      allow get: if owner(uid) || admin();
+      allow list: if admin();
+      // These are directory records. Only trusted Admin SDK code can grant Auth claims.
+      allow create, update, delete: if head();
+    }
+    match /products/{id} {
+      allow get, list: if admin() || resource.data.status == 'Active';
+      allow create, update: if admin() && request.resource.data.id == id
+        && request.resource.data.title is string && request.resource.data.title.size() <= 200
+        && request.resource.data.price is number && request.resource.data.price >= 0
+        && request.resource.data.status in ['Active', 'Inactive', 'Draft', 'Deleted'];
+      allow delete: if admin();
+    }
+    match /phoneModels/{id} {
+      allow get, list: if admin() || resource.data.status == 'Active';
+      allow create, update: if admin() && request.resource.data.id == id
+        && request.resource.data.platform in ['Android', 'iPhone']
+        && shortText(request.resource.data.brand, 100) && shortText(request.resource.data.name, 150)
+        && request.resource.data.status in ['Active', 'Inactive'];
+      allow delete: if admin();
+    }
+    match /jobs/{id} {
+      allow get, list: if admin() || resource.data.status == 'Published';
+      allow create, update: if admin() && request.resource.data.id == id
+        && shortText(request.resource.data.title, 200)
+        && request.resource.data.status in ['Draft', 'Published'];
+      allow delete: if admin();
+    }
+    match /tickets/{id} {
+      allow get, list: if admin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow create: if signedIn() && request.resource.data.keys().hasAll(
+          ['id', 'customerId', 'name', 'email', 'phone', 'category', 'order', 'message', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly(
+          ['id', 'customerId', 'name', 'email', 'phone', 'category', 'order', 'message', 'status', 'createdAt'])
+        && request.resource.data.id == id && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && shortText(request.resource.data.name, 100) && shortText(request.resource.data.phone, 24)
+        && shortText(request.resource.data.category, 100) && shortText(request.resource.data.order, 100)
+        && shortText(request.resource.data.message, 5000)
+        && request.resource.data.status == 'Open' && request.resource.data.createdAt == request.time;
+      allow update: if admin() && request.resource.data.customerId == resource.data.customerId;
+      allow delete: if head();
+    }
+    match /orders/{id} {
+      allow get, list: if admin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      // Pricing, stock and payment verification require trusted server processing.
+      allow create, update, delete: if false;
+    }
+    match /phoneModelRequests/{id} {
+      allow get, list: if admin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow create: if signedIn() && request.resource.data.keys().hasAll(
+          ['id', 'customerId', 'platform', 'brand', 'name', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly(
+          ['id', 'customerId', 'platform', 'brand', 'name', 'status', 'createdAt'])
+        && request.resource.data.id == id && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.platform in ['Android', 'iPhone']
+        && shortText(request.resource.data.brand, 100) && shortText(request.resource.data.name, 150)
+        && request.resource.data.status == 'Pending' && request.resource.data.createdAt == request.time;
+      allow update: if admin() && request.resource.data.customerId == resource.data.customerId;
+      allow delete: if head();
+    }
+    // Unimplemented collections and original artwork storage stay closed.
+    match /{document=**} { allow read, write: if false; }
+  }
+}

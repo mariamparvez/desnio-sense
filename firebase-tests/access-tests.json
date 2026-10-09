@@ -1,0 +1,422 @@
+{
+  "testSuite": {
+    "testCases": [
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/products/tshirt",
+          "method": "get",
+          "auth": null
+        },
+        "resource": {
+          "data": {
+            "status": "Active"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/products/draft",
+          "method": "get",
+          "auth": null
+        },
+        "resource": {
+          "data": {
+            "status": "Draft"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/products/tshirt",
+          "method": "update",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "id": "tshirt",
+              "title": "Changed",
+              "price": 1,
+              "status": "Active"
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "status": "Active"
+          }
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/products/tshirt",
+          "method": "update",
+          "auth": {
+            "uid": "admin-1",
+            "token": {
+              "email": "admin@example.test",
+              "email_verified": true,
+              "admin": true
+            }
+          },
+          "resource": {
+            "data": {
+              "id": "tshirt",
+              "title": "Changed",
+              "price": 599,
+              "status": "Active"
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "status": "Active"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/products/tshirt",
+          "method": "delete",
+          "auth": {
+            "uid": "admin-1",
+            "token": {
+              "email": "admin@example.test",
+              "email_verified": false,
+              "admin": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "status": "Active"
+          }
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/users/customer-1",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/users/customer-2",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/admins/customer-1",
+          "method": "create",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "role": "Admin Head"
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/admins/new-admin",
+          "method": "create",
+          "auth": {
+            "uid": "admin-1",
+            "token": {
+              "email": "admin@example.test",
+              "email_verified": true,
+              "admin": true
+            }
+          },
+          "resource": {
+            "data": {
+              "role": "Admin"
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/admins/new-admin",
+          "method": "create",
+          "auth": {
+            "uid": "head-1",
+            "token": {
+              "email": "head@example.test",
+              "email_verified": true,
+              "admin": true,
+              "adminHead": true
+            }
+          },
+          "resource": {
+            "data": {
+              "role": "Admin"
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/orders/order-1",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/orders/order-2",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-2"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/orders/order-1",
+          "method": "update",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          },
+          "resource": {
+            "data": {
+              "customerId": "customer-1",
+              "payment": "Paid"
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/orders/order-1",
+          "method": "update",
+          "auth": {
+            "uid": "admin-1",
+            "token": {
+              "email": "admin@example.test",
+              "email_verified": true,
+              "admin": true
+            }
+          },
+          "resource": {
+            "data": {
+              "customerId": "customer-1",
+              "payment": "Paid"
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/tickets/ticket-1",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-1"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/tickets/ticket-2",
+          "method": "get",
+          "auth": {
+            "uid": "customer-1",
+            "token": {
+              "email": "customer@example.test",
+              "email_verified": true
+            }
+          }
+        },
+        "resource": {
+          "data": {
+            "customerId": "customer-2"
+          }
+        }
+      },
+      {
+        "expectation": "ALLOW",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/jobs/job-1",
+          "method": "get",
+          "auth": null
+        },
+        "resource": {
+          "data": {
+            "status": "Published"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/jobs/job-2",
+          "method": "get",
+          "auth": null
+        },
+        "resource": {
+          "data": {
+            "status": "Draft"
+          }
+        }
+      },
+      {
+        "expectation": "DENY",
+        "pathEncoding": "PLAIN",
+        "request": {
+          "path": "/databases/(default)/documents/secrets/test",
+          "method": "get",
+          "auth": {
+            "uid": "head-1",
+            "token": {
+              "email": "head@example.test",
+              "email_verified": true,
+              "admin": true,
+              "adminHead": true
+            }
+          }
+        },
+        "resource": {
+          "data": {}
+        }
+      }
+    ]
+  },
+  "labels": [
+    "Public active catalogue",
+    "Private draft catalogue",
+    "Customer cannot change catalogue",
+    "Admin can update catalogue",
+    "Unverified admin blocked",
+    "Own profile visible",
+    "Other profile private",
+    "Customer cannot grant admin",
+    "Admin cannot grant admin",
+    "Head directory management",
+    "Own order visible",
+    "Other order private",
+    "Customer cannot mark paid",
+    "Admin cannot bypass payment server",
+    "Own support ticket visible",
+    "Other support ticket private",
+    "Published jobs visible",
+    "Draft jobs private",
+    "Unexpected collection closed"
+  ]
+}

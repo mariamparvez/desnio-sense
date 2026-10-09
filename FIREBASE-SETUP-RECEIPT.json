@@ -1,0 +1,31 @@
+{
+  "project": "desniosense",
+  "checkedAt": "2026-10-09T01:45:50.968Z",
+  "database": {
+    "name": "projects/desniosense/databases/(default)",
+    "location": "asia-south1",
+    "edition": "STANDARD",
+    "freeTier": true,
+    "deleteProtection": "DELETE_PROTECTION_ENABLED"
+  },
+  "billingEnabled": false,
+  "catalogue": {
+    "products": 13,
+    "phoneModels": 58
+  },
+  "adminHead": {
+    "email": "designwithmariam@gmail.com",
+    "uid": "mvx95s5prSN2SR2PPhoI49pv7HA2",
+    "admin": true,
+    "adminHead": true,
+    "passwordCreated": false,
+    "emailVerified": false
+  },
+  "security": {
+    "rulesMatch": true,
+    "sha256": "a9ab145b368adab3ffb4c6eae6b11b571ddf7cc2168ad10d412d5bf49ce85acb",
+    "ruleset": "projects/desniosense/rulesets/f11b5739-da90-44ac-b56e-5137d86bbf2a",
+    "anonymousAdminReadDenied": true,
+    "anonymousOrderReadDenied": true
+  }
+}
