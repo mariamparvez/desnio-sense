@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: npm ci --ignore-scripts
+      - run: npm audit --omit=dev --audit-level=moderate
       - run: npm run check
       - run: npm run test
       - run: npm run build

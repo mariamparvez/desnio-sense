@@ -1,5 +1,6 @@
 import {initializeApp,getApps} from 'firebase-admin/app';
 import {getAuth} from 'firebase-admin/auth';
+import {getAppCheck} from 'firebase-admin/app-check';
 import {Firestore,FieldValue} from '@google-cloud/firestore';
 import {OAuth2Client} from 'google-auth-library';
 import {getVercelOidcToken} from '@vercel/oidc';
@@ -23,4 +24,4 @@ export function credential(){return{async getAccessToken(){
 const identity=credential(),app=getApps()[0]||initializeApp({projectId,credential:identity});
 const googleClient=new OAuth2Client();
 googleClient.refreshHandler=async()=>{const token=await identity.getAccessToken();return{access_token:token.access_token,expiry_date:Date.now()+token.expires_in*1000};};
-export const auth=getAuth(app),db=new Firestore({projectId,authClient:googleClient}),stamp=()=>FieldValue.serverTimestamp();
+export const auth=getAuth(app),appCheck=getAppCheck(app),db=new Firestore({projectId,authClient:googleClient}),stamp=()=>FieldValue.serverTimestamp();

@@ -1,6 +1,7 @@
 import {randomUUID} from 'node:crypto';
-import {auth,db,stamp,credential} from './firebase.mjs';
+import {auth,appCheck,db,stamp,credential} from './firebase.mjs';
 import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord} from './domain.mjs';
+import {validateRequest,privileges,responseSecurity} from './security.mjs';
 const OWNER='designwithmariam@gmail.com';
 const features={payments:false,artworkStorage:false,phoneLogin:false,facebookLogin:false,orderRequests:true};
 const actions=new Set(['profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request']);
@@ -12,10 +13,17 @@ async function actor(req){
  let token,current;try{token=await auth.verifyIdToken(bearer[1],true);current=await auth.getUser(token.uid);}catch{throw new AppError('Your session expired. Sign in again.',401);}
  assert(!current.disabled,'This account is disabled.',403);
  const user=(await db.doc('users/'+token.uid).get()).data();assert(user?.status!=='Inactive','This account is inactive.',403);
- return {...token,email:current.email,email_verified:current.emailVerified&&token.email_verified===true,admin:current.emailVerified&&current.customClaims?.admin===true,adminHead:current.emailVerified&&current.customClaims?.adminHead===true};
+ const directory=current.customClaims?.admin?(await db.doc('admins/'+token.uid).get()).data():null;
+ return {...token,email:current.email,email_verified:current.emailVerified&&token.email_verified===true,...privileges(current,token,directory,user)};
 }
 function staff(a,head=false){assert(a.admin&&(!head||a.adminHead),'You do not have permission for this action.',403);}
 async function rate(a,action,max=30){const ref=db.doc('rateLimits/'+a.uid+'-'+action),now=Date.now();await db.runTransaction(async t=>{const data=(await t.get(ref)).data(),start=data?.start||now,count=now-start<60000?(data?.count||0):0;assert(count<max,'Too many requests. Please wait a minute.',429);t.set(ref,{start:now-start<60000?start:now,count:count+1});});}
+async function dailyContentLimit(a,action){
+ if(!['ticket','application','model-request','newsletter'].includes(action))return;
+ assert(a.email_verified,'Verify your email address from My account before submitting this request.',403);
+ const day=new Date().toISOString().slice(0,10),ref=db.doc('rateLimits/'+a.uid+'-content-'+day);
+ await db.runTransaction(async t=>{const count=(await t.get(ref)).data()?.count||0;assert(count<20,'You have reached today’s submission limit. Contact us on WhatsApp.',429);t.set(ref,{count:count+1});});
+}
 async function saveProfile(a,data){const p=profile(data),ref=db.doc('users/'+a.uid);await db.runTransaction(async t=>{const previous=(await t.get(ref)).data();t.set(ref,{uid:a.uid,id:a.uid,...p,email:a.email||'',status:previous?.status||'Active',createdAt:previous?.createdAt||stamp(),updatedAt:stamp()});});await auth.updateUser(a.uid,{displayName:p.name});return{profile:{id:a.uid,uid:a.uid,...p,email:a.email,status:'Active'}};}
 async function createOrder(a,data){
  assert(a.email&&a.email_verified,'Verify your email address before saving an order request.',403);
@@ -97,14 +105,17 @@ async function dispatch(a,action,data){
  throw new AppError('Unknown action.',404);
 }
 export default async function handler(req,res){
- res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
+ responseSecurity(res);
  try{
   const action=new URL(req.url,'https://desnio-sense.vercel.app').searchParams.get('action');
   if(req.method==='GET'&&action==='health'){if(Date.now()>healthUntil){await credential().getAccessToken();await db.doc('system/health').get();healthUntil=Date.now()+60000;}res.status(200).json({backend:'ready',project:'desniosense',features});return;}
-  assert(req.method==='POST','Use POST for this action.',405);
+  const body=validateRequest(req);
   assert(actions.has(action),'Unknown action.',404);
-  const origin=req.headers.origin,host=String(req.headers.host||'');assert(!origin||origin==='https://'+host||(!process.env.VERCEL&&/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)),'This origin is not allowed.',403);
-  const body=typeof req.body==='string'?JSON.parse(req.body):req.body;assert(body&&typeof body==='object'&&!Array.isArray(body),'Invalid request.');assert(Buffer.byteLength(JSON.stringify(body))<=700000,'This request is too large.',413);
-  const user=await actor(req);await rate(user,action,['ticket','application','model-request'].includes(action)?5:30);const result=await dispatch(user,action,body);res.status(200).json(result);
+  if(process.env.VERCEL){
+   const token=String(req.headers['x-firebase-appcheck']||'');
+   assert(token.length>0&&token.length<=10000,'Browser verification failed. Reload the page and try again.',403);
+   try{const verified=await appCheck.verifyToken(token);assert(verified.appId==='1:548709280275:web:a300dd238423e7d1332de6','Invalid browser verification.',403);}catch{throw new AppError('Browser verification failed. Reload the page and try again.',403);}
+  }
+  const user=await actor(req);await rate(user,action,['ticket','application','model-request'].includes(action)?5:30);await dailyContentLimit(user,action);const result=await dispatch(user,action,body);res.status(200).json(result);
  }catch(error){const status=error instanceof AppError?error.status:error.code?.startsWith('auth/')?400:503;const message=error instanceof AppError?error.message:error.code?.startsWith('auth/')?'The account could not be changed. Check its email and current status.':'The backend could not complete this request. Please retry or contact support.';res.status(status).json({error:message});}
 }
