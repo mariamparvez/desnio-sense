@@ -14,7 +14,7 @@ Sign in through Google using the Admin Head account. Add a regular catalogue pro
 
 In **Test Mode → Account & Settings → Webhooks**, add:
 
-- URL: `https://desniosense.com/api/razorpay-webhook`
+- URL: `https://www.desniosense.com/api/razorpay-webhook`
 - Secret: the protected secret generated for this project; the owner has a private local copy outside the repository.
 - Events: `payment.captured`, `order.paid`, `payment.failed`.
 
