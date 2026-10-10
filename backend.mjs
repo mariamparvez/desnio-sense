@@ -8,7 +8,7 @@ const productionHosts=new Set(['desnio-sense.vercel.app','desniosense.com','www.
 const appCheck=productionHosts.has(location.hostname)?initializeAppCheck(app,{provider:new ReCaptchaEnterpriseProvider('6Le2cuYtAAAAAP9Mn-ByDEjm9rETsxeROWIcZLBb'),isTokenAutoRefreshEnabled:true}):null;
 async function browserAttestation(){return appCheck?(await getToken(appCheck,false)).token:null;}
 const state={products:[],phoneModels:[],jobs:[],users:[],admins:[],orders:[],tickets:[],phoneModelRequests:[],applications:[]};
-let session=null,refreshing,initial=true,requestUnsubscribe=null;
+let session=null,refreshing,initial=true,requestUnsubscribe=null,ticketUnsubscribe=null;
 for(const key of ['session','customers','admins','orders','tickets','jobs','managed-products','phone-models','phone-model-requests'])localStorage.removeItem('ds-'+key);
 function clearPersonalCache(){for(const key of ['checkout-details','checkout-key','latest-order','support-email','coupon','test-checkout','test-checkout-key','cart-dirty'])localStorage.removeItem('ds-'+key);}
 const errorMessage=error=>({'auth/invalid-credential':'Email or password is incorrect.','auth/email-already-in-use':'This email already has an account. Sign in or reset your password.','auth/popup-closed-by-user':'Google sign-in was closed. Try again.','auth/popup-blocked':'Allow the sign-in popup and try again.','auth/account-exists-with-different-credential':'Use your existing sign-in method for this email.','auth/user-disabled':'This account is disabled. Contact support.','auth/too-many-requests':'Too many attempts. Please wait and try again.','auth/network-request-failed':'Check your internet connection and try again.','permission-denied':'Your account does not have access to this information.'}[error.code]||error.message||'Unable to complete this request.');
@@ -26,7 +26,7 @@ async function refresh(){if(refreshing)return refreshing;refreshing=(async()=>{
 let authQueue=Promise.resolve();
 function synchronizeUser(user){return authQueue=authQueue.catch(()=>{}).then(()=>syncUser(user));}
 async function syncUser(user){
- requestUnsubscribe?.();requestUnsubscribe=null;
+ requestUnsubscribe?.();requestUnsubscribe=null;ticketUnsubscribe?.();ticketUnsubscribe=null;
  if(user?.uid!==auth.currentUser?.uid)return;
  session=null;for(const key of ['users','admins','orders','tickets','phoneModelRequests','applications'])state[key]=[];
  if(user){
@@ -42,6 +42,7 @@ async function syncUser(user){
   const draft=await getDoc(doc(db,'designs',user.uid));if(draft.exists())Store.set('saved-design',draft.data().draft);
  }else if(Store.get('cart-owner','')){Store.set('cart',[]);Store.set('cart-owner','');Store.set('saved-design',null);clearPersonalCache();}
  await refresh();refreshBag();
+ if(session?.type==='admin')ticketUnsubscribe=onSnapshot(query(collection(db,'tickets'),orderBy('createdAt','desc'),limit(100)),snapshot=>{state.tickets=snapshot.docs.map(d=>({...d.data(),id:d.id}));window.dispatchEvent(new Event('ds-cloud-change'));},error=>toast(errorMessage(error)));
  if(session?.type==='admin')requestUnsubscribe=onSnapshot(query(collection(db,'phoneModelRequests'),orderBy('createdAt','desc'),limit(100)),snapshot=>{state.phoneModelRequests=snapshot.docs.map(d=>({...d.data(),id:d.id}));window.dispatchEvent(new Event('ds-cloud-change'));},error=>toast(errorMessage(error)));
 }
 let cartQueue=Promise.resolve();
@@ -75,3 +76,4 @@ onAuthStateChanged(auth,async user=>{try{await synchronizeUser(user);if(initial)
 // Refresh shared records while a visible page is open without making hidden tabs poll.
 setInterval(()=>{if(!document.hidden)refresh().catch(error=>DS.fail(error));},90000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh().catch(error=>DS.fail(error));});
+

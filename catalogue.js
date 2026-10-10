@@ -1,5 +1,5 @@
 'use strict';
-const SECTIONS={all:{name:'All products',description:'Everyday essentials, with a little more you.'},apparel:{name:'Apparel',description:'Wear your personality. Make your own statement.'},accessories:{name:'Accessories',description:'Your everyday companions. Your original expression.'},lifestyle:{name:'Drinkware & lifestyle',description:'Little rituals, made a little more personal.'},stationery:{name:'Stationery',description:'For your ideas, plans and everyday inspiration.'}};
+const SECTIONS={all:{name:'All products',description:'Everyday essentials, with a little more you.'},apparel:{name:'Apparel',description:'Wear your personality. Make your own statement.'},accessories:{name:'Accessories',description:''},lifestyle:{name:'Drinkware & lifestyle',description:'Little rituals, made a little more personal.'},stationery:{name:'Stationery',description:'For your ideas, plans and everyday inspiration.'}};
 const PRODUCTS=[
  {id:'tshirt',name:'T-shirts',singular:'T-shirt',section:'apparel',icon:'shirt',image:'tshirt',desc:'A wearable canvas for your creativity.',style:'graphic',fresh:true},
  {id:'jersey',name:'Jerseys',singular:'Jersey',section:'apparel',icon:'jersey',image:'jersey',desc:'Your team. Your name. Your colours.',style:'graphic'},
@@ -17,3 +17,5 @@ const PRODUCTS=[
 ];
 const productImage=p=>p.imageSrc||((p.baseId||p.id)==='sweatshirt'?'assets/blanks/sweatshirt-front.png':'assets/products/'+p.image+'.jpg');
 const iconPath=p=>'assets/icons/'+p.icon+(p.icon==='sweatshirt'?'.svg':'.png');
+
+

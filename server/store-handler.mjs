@@ -1,12 +1,12 @@
-import {randomUUID} from 'node:crypto';
+import {randomUUID,createHash} from 'node:crypto';
 import {auth,appCheck,db,stamp,credential} from './firebase.mjs';
-import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord,modelRequest} from './domain.mjs';
+import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord,modelRequest,corporateEnquiry} from './domain.mjs';
 import {validateRequest,privileges,responseSecurity} from './security.mjs';
 import {paymentSettings} from './razorpay.mjs';
 import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
 const OWNER='designwithmariam@gmail.com';
 const features={payments:false,artworkStorage:false,phoneLogin:false,facebookLogin:false,orderRequests:true};
-const actions=new Set(['profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
+const actions=new Set(['corporate-enquiry','profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
 let healthUntil=0;
 const clean=record=>JSON.parse(JSON.stringify(record,(key,value)=>value?.toDate?value.toDate().toISOString():value));
 function audit(actor,action,target){return db.collection('audit').add({actor:actor.uid,action,target,at:stamp()});}
@@ -109,6 +109,11 @@ async function dispatch(a,action,data){
  if(action==='model-request'){const recordId='PHONE-'+randomUUID(),product=data.productId?(await db.doc('products/'+id(data.productId)).get()).data():null,record=modelRequest(data,product);await db.doc('phoneModelRequests/'+recordId).create({...record,id:recordId,customerId:a.uid,customerEmail:a.email,customerName:text(a.name||a.email,150),createdAt:stamp()});await audit(a,'phone-model:request',recordId);return{saved:true,id:recordId,payment:record.payment};}
  throw new AppError('Unknown action.',404);
 }
+async function corporate(req,data){
+ const record=corporateEnquiry(data),client=String(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim(),bucket=createHash('sha256').update('corporate:'+client).digest('hex'),now=Date.now(),day=new Date().toISOString().slice(0,10),quota=db.doc('rateLimits/corporate-'+bucket),ticketId='BULK-'+randomUUID(),target=db.doc('tickets/'+ticketId);
+ await db.runTransaction(async t=>{const previous=(await t.get(quota)).data()||{},minute=now-(previous.start||0)<60000,count=minute?(previous.count||0):0,daily=previous.day===day?(previous.daily||0):0;assert(count<3&&daily<10,'Too many enquiries. Please contact us on WhatsApp or try later.',429);t.set(quota,{start:minute?previous.start:now,count:count+1,day,daily:daily+1});t.create(target,{...record,id:ticketId,customerId:'',category:'Corporate & bulk orders',order:'',status:'Open',notes:'',date:day,createdAt:stamp(),message:['Company: '+record.company,'Products: '+record.interest,'Quantity: '+record.quantity,'Delivery city: '+record.city,...(record.deadline?['Preferred date: '+record.deadline]:[]),record.message].join('\n')});});
+ return{saved:true,id:ticketId};
+}
 export default async function handler(req,res){
  responseSecurity(res);
  try{
@@ -121,6 +126,8 @@ export default async function handler(req,res){
    assert(token.length>0&&token.length<=10000,'Browser verification failed. Reload the page and try again.',403);
    try{const verified=await appCheck.verifyToken(token);assert(verified.appId==='1:548709280275:web:a300dd238423e7d1332de6','Invalid browser verification.',403);}catch{throw new AppError('Browser verification failed. Reload the page and try again.',403);}
   }
+  if(action==='corporate-enquiry'){res.status(200).json(await corporate(req,body));return;}
   const user=await actor(req);await rate(user,action,['ticket','application','model-request'].includes(action)?5:30);await dailyContentLimit(user,action);const result=await dispatch(user,action,body);res.status(200).json(result);
  }catch(error){const status=error instanceof AppError?error.status:error.code?.startsWith('auth/')?400:503;const message=error instanceof AppError?error.message:error.code?.startsWith('auth/')?'The account could not be changed. Check its email and current status.':'The backend could not complete this request. Please retry or contact support.';res.status(status).json({error:message});}
 }
+

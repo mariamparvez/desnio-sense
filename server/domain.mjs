@@ -52,3 +52,13 @@ export function catalogueRecord(collection,input,recordId){
  if(collection==='jobs'){assert(['Draft','Published'].includes(common.status),'Invalid role visibility.');return{...common,title:text(input.title,200),department:text(input.department,100),location:text(input.location,100),type:text(input.type,50),email:email(input.email),description:text(input.description,10000),image:image(input.image)};}
  throw new AppError('Unsupported collection.');
 }
+
+export function corporateEnquiry(input){
+ assert(input.consent===true,'Please agree to being contacted about your enquiry.');
+ const quantity=Number(input.quantity);assert(Number.isInteger(quantity)&&quantity>=1&&quantity<=100000,'Enter a whole quantity between 1 and 100,000.');
+ const interest=text(input.interest,100);assert(['Apparel','Tote bags','Phone cases','Drinkware','Mixed products'].includes(interest),'Choose a supported product type.');
+ const contact=phone(input.phone);assert(contact&&contact.replace(/\D/g,'').length>=7,'Enter your phone number.');
+ const deadline=text(input.deadline||'',10,false);assert(!deadline||(/^\d{4}-\d{2}-\d{2}$/.test(deadline)&&Number.isFinite(Date.parse(deadline))&&new Date(deadline).toISOString().slice(0,10)===deadline),'Enter a valid delivery date.');
+ return{name:text(input.name,100),company:text(input.company,150),email:email(input.email),phone:contact,interest,quantity,city:text(input.city,100),deadline,message:text(input.message,3000),consent:true};
+}
+

@@ -3,7 +3,7 @@ export const ORIGIN='https://www.desniosense.com';
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const productUrl=p=>ORIGIN+'/product.html?product='+encodeURIComponent(p.id);
 export const sections={all:'All products',apparel:'Apparel',accessories:'Accessories',lifestyle:'Drinkware & lifestyle',stationery:'Stationery'};
-export const publicPages=['/','/products.html','/customise.html','/about.html','/contact.html','/careers.html','/faq.html','/returns.html','/terms.html','/copyright.html'];
+export const publicPages=['/','/products.html','/customise.html','/about.html','/contact.html','/corporate-orders.html','/careers.html','/faq.html','/returns.html','/terms.html','/copyright.html'];
 const json=v=>JSON.stringify(v).replace(/[<>&]/g,c=>'\\u'+c.charCodeAt(0).toString(16).padStart(4,'0'));
 export function photoUrl(p,n=0){const src=n?(p.galleryImages||[])[n-1]:p.imageSrc;if(src?.startsWith('data:'))return ORIGIN+'/api/product-image?id='+encodeURIComponent(p.id)+'&photo='+n;if(src?.startsWith('https://'))return src;return ORIGIN+'/'+(src||'assets/monogram.png');}
 export function head({title,description,url,image=ORIGIN+'/assets/v10-hero-branded.jpg',noindex=false,schema=[]}){
