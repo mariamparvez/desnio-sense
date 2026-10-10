@@ -10,6 +10,7 @@ export function image(value){if(!value)return '';assert(typeof value==='string'&
 export function profile(input){return {name:text(input.name,100),phone:phone(input.phone)};}
 export function delivery(input){return {...profile(input),address:text(input.address,500),city:text(input.city,100),pincode:text(input.pincode,6),...(input.state?{state:text(input.state,100)}:{})};}
 export function publishedProduct(p){return !!p&&p.status==='Active'&&p.approved===true&&typeof p.title==='string'&&p.title.trim().length>0&&Number.isFinite(p.price)&&p.price>0;}
+export function modelRequest(input,product){assert(['Android','iPhone'].includes(input.platform),'Choose a phone platform.');const result={platform:input.platform,brand:input.platform==='iPhone'?'Apple':text(input.brand,100),name:text(input.name,150),status:'Pending',payment:'Not paid'};if(input.productId){assert(publishedProduct(product)&&(product.baseId||product.id)==='case','This phone case is unavailable.',409);Object.assign(result,{productId:product.id,productName:product.title,productCode:product.productCode||product.id,productImage:image(product.imageSrc),price:product.price,quantity:number(input.quantity||1,1,20)});assert(Number.isInteger(result.quantity),'Quantity must be a whole number.');}return result;}
 export function priceOrder(cart,products){
  assert(Array.isArray(cart)&&cart.length>0&&cart.length<=25,'Choose between 1 and 25 items.');
  const requested=new Map(),items=cart.map(item=>{

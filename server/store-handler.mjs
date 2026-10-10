@@ -1,6 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {auth,appCheck,db,stamp,credential} from './firebase.mjs';
-import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord} from './domain.mjs';
+import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord,modelRequest} from './domain.mjs';
 import {validateRequest,privileges,responseSecurity} from './security.mjs';
 import {paymentSettings} from './razorpay.mjs';
 import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
@@ -106,7 +106,7 @@ async function dispatch(a,action,data){
  }
  if(action==='newsletter'){await db.doc('subscribers/'+a.uid).set({customerId:a.uid,email:a.email,consent:true,updatedAt:stamp()});return{saved:true};}
  if(action==='application'){const job=await db.doc('jobs/'+id(data.jobId)).get();assert(job.exists&&job.data().status==='Published','This role is unavailable.');const recordId='APPLY-'+randomUUID();await db.doc('applications/'+recordId).create({id:recordId,customerId:a.uid,jobId:data.jobId,name:text(data.name,100),email:a.email,phone:phone(data.phone),portfolio:text(data.portfolio||'',500,false),message:text(data.message,5000),status:'New',createdAt:stamp()});return{saved:true,id:recordId};}
- if(action==='model-request'){const recordId='PHONE-'+randomUUID();assert(['Android','iPhone'].includes(data.platform),'Choose a phone platform.');await db.doc('phoneModelRequests/'+recordId).create({id:recordId,customerId:a.uid,platform:data.platform,brand:text(data.brand,100),name:text(data.name,150),status:'Pending',createdAt:stamp()});return{saved:true,id:recordId};}
+ if(action==='model-request'){const recordId='PHONE-'+randomUUID(),product=data.productId?(await db.doc('products/'+id(data.productId)).get()).data():null,record=modelRequest(data,product);await db.doc('phoneModelRequests/'+recordId).create({...record,id:recordId,customerId:a.uid,customerEmail:a.email,customerName:text(a.name||a.email,150),createdAt:stamp()});await audit(a,'phone-model:request',recordId);return{saved:true,id:recordId,payment:record.payment};}
  throw new AppError('Unknown action.',404);
 }
 export default async function handler(req,res){

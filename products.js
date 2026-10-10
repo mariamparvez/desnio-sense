@@ -9,9 +9,9 @@
  function entries(){const items=PRODUCTS.filter(p=>section==='all'||p.section===section),groups=[{id:'all',name:'All'},{id:'new',name:'New Arrivals',image:items[0]}];
   for(const base of Object.keys(names)){const matching=items.filter(p=>(p.baseId||p.id)===base);if(!matching.length)continue;
    if(section==='apparel'&&base==='tshirt'){for(const a of ['Women','Men','Couples','Unisex','Kids']){const p=matching.find(p=>p.audience===a);if(p)groups.push({id:a+'-tshirts',name:audienceName(a),type:base,audience:a,image:p});}}
-   else groups.push({id:base,name:names[base],type:base,image:matching[0]});
+   else groups.push({id:base,name:base==='case'&&matching.every(p=>p.collectionName==='The Arabic Collection')?'The Arabic Collection':names[base],type:base,image:matching[0]});
   }
-  if(section==='accessories'||section==='all'){const p=items.find(p=>p.collectionName==='The Arabic Collection');if(p)groups.push({id:'collection:The Arabic Collection',name:'The Arabic Collection',collection:'The Arabic Collection',image:p});}
+  if(section==='accessories'||section==='all'){const p=items.find(p=>p.collectionName==='The Arabic Collection');if(p&&!groups.some(g=>g.name==='The Arabic Collection'))groups.push({id:'collection:The Arabic Collection',name:'The Arabic Collection',collection:'The Arabic Collection',image:p});}
   return groups;
  }
  function buildRail(){rail.replaceChildren();for(const entry of entries()){const b=document.createElement('button');b.className='circle-category'+(category===entry.id?' active':'');b.setAttribute('aria-pressed',String(category===entry.id));const circle=document.createElement('span');circle.className='circle-picture'+(entry.id==='all'?' all-grid-circle':'');if(entry.image){const img=document.createElement('img');img.src=entry.id==='new'?'assets/icons/art.png':iconPath(entry.image);img.alt='';circle.append(img);}else{circle.classList.add('all-grid');circle.textContent='⊞';}const label=document.createElement('span');label.textContent=entry.name;b.append(circle,label);b.onclick=()=>{category=entry.id;type=entry.type||'';audience=entry.audience||'';collection=entry.collection||'';buildRail();render();};rail.append(b);}}
