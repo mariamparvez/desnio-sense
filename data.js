@@ -7,7 +7,9 @@ const uid=p=>p+'-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toStr
 const COLLECTION_PHOTOS={apparel:'assets/v4-apparel.jpg',accessories:'assets/v3-accessories.jpg',lifestyle:'assets/v3-drinkware.jpg',stationery:'assets/v3-stationery.jpg'};
 const DETAILS={tshirt:['Form & Flow T-shirt',599,['XS','S','M','L','XL','XXL']],jersey:['Velocity Jersey',899,['XS','S','M','L','XL','XXL']],cap:['Contour Cap',449,['Adjustable']],hoodie:['Orbit Hoodie',1299,['S','M','L','XL','XXL']],sweatshirt:['Infinity Sweatshirt',1099,['S','M','L','XL','XXL']],case:['Tidal Phone Case',399,['iPhone 15','iPhone 16','Samsung S24','Other model']],tote:['Form & Flow Tote',499,['Standard']],bottle:['Celestial Bottle',699,['500 ml','750 ml']],mug:['Muse Coffee Cup',349,['Standard']],plate:['Solstice Plate',599,['Standard']],journal:['Celestial Journal',499,['A5']],notepad:['Ideas in Motion Notepad',249,['A5']],sticker:['Creative Elements Stickers',99,['Sticker set']]};
 PRODUCTS.forEach(p=>Object.assign(p,{title:DETAILS[p.id][0],price:DETAILS[p.id][1],variants:DETAILS[p.id][2],collection:SECTIONS[p.section].name,care:p.section==='apparel'?'Follow the final care label. Use a gentle wash and mild detergent; avoid direct heat on printed artwork.':'Follow the final product care instructions. Handle the printed surface gently and avoid abrasive cleaners.'}));
-const CATALOGUE_BASE=PRODUCTS.map(p=>({...p,baseId:p.id,status:'Active'}));
+const CATALOGUE_BASE=PRODUCTS.map(p=>({...p,baseId:p.id,status:'Draft'}));
+// Blank studio canvases are separate from approved merchandise. Never show seeded samples.
+PRODUCTS.splice(0,PRODUCTS.length);
 
 let readyResolve,readyReject;
 const DS={
@@ -25,4 +27,4 @@ const DS={
 };
 DS.ready.catch(()=>{});
 DS.timeout=setTimeout(()=>DS._reject(new Error('The store could not connect to Firebase. Check your internet connection and reload.')),25000);
-function productCard(p){return'<article class="product-card"><a class="product-photo" href="product.html?product='+p.id+'" aria-label="View '+safe(p.title)+'"><img src="'+productImage(p)+'" alt="'+safe(p.title)+'" loading="lazy">'+(p.fresh?'<span class="product-badge">NEW ARRIVAL</span>':'')+'</a><div class="product-info"><div><h2><a href="product.html?product='+p.id+'">'+safe(p.title)+'</a></h2><p>'+safe(p.desc)+'</p><p class="listing-price">'+money(p.price)+' <span>Preview price</span></p></div><button class="quick-add" data-quick-add="'+p.id+'" aria-label="Add '+safe(p.title)+' to cart">＋</button></div></article>'}
+function productCard(p){return'<article class="product-card"><a class="product-photo" href="product.html?product='+p.id+'" aria-label="View '+safe(p.title)+'"><img src="'+productImage(p)+'" alt="'+safe(p.title)+'" loading="lazy">'+(p.fresh?'<span class="product-badge">NEW ARRIVAL</span>':'')+'</a><div class="product-info"><div><h2><a href="product.html?product='+p.id+'">'+safe(p.title)+'</a></h2><p>'+safe(p.desc)+'</p><p class="listing-price">'+money(p.price)+'</p></div><button class="quick-add" data-quick-add="'+p.id+'" aria-label="Add '+safe(p.title)+' to cart">＋</button></div></article>'}

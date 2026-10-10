@@ -54,6 +54,33 @@
     },
     "api/razorpay-webhook.mjs": {
       "includeFiles": "server/**"
+    },
+    "api/shop.mjs": {
+      "includeFiles": "{server/**,products.html,product.html}"
+    },
+    "api/product-image.mjs": {
+      "includeFiles": "server/**"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/products.html",
+      "destination": "/api/shop?view=products"
+    },
+    {
+      "source": "/product.html",
+      "destination": "/api/shop?view=product"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/shop?view=sitemap"
+    }
+  ]
 }

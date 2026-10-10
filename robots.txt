@@ -1,7 +1,6 @@
 User-agent: *
-Disallow: /admin-
-Disallow: /account.html
-Disallow: /checkout.html
-Disallow: /payment.html
-Disallow: /order-confirmation.html
-Disallow: /page-directory.html
+Allow: /
+Disallow: /api/
+Allow: /api/product-image
+
+Sitemap: https://www.desniosense.com/sitemap.xml

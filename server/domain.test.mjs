@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {priceOrder,orderKey,image,catalogueRecord,canCancel} from './domain.mjs';
-const product={id:'tshirt',title:'T-shirt',status:'Active',price:599,stock:3,variants:['M'],image:'tshirt'};
+const product={id:'tshirt',title:'T-shirt',status:'Active',approved:true,colours:['Ivory'],price:599,stock:3,variants:['M'],image:'tshirt'};
 const item={product:'tshirt',quantity:1,variant:'M',colour:'Ivory',price:.01,custom:false};
 test('Pricing uses the catalogue and ignores browser totals',()=>{assert.equal(priceOrder([{...item,quantity:2}],[product]).total,1198);});
 test('Splitting quantities across lines cannot bypass available stock',()=>{assert.throws(()=>priceOrder([{...item,quantity:2},{...item,quantity:2}],[product]),/stock/);});
