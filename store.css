@@ -46,3 +46,5 @@
 
 .studio-assisted-order{width:min(100%,620px);padding:36px 20px;margin:auto;text-align:center}.studio-assisted-order h2{font-size:clamp(32px,5vw,54px);margin:20px 0}.studio-assisted-order p{line-height:1.7}.studio-assisted-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}.studio-workspace.assisted{grid-template-columns:116px minmax(0,1fr)}@media(max-width:959px){.studio-workspace.assisted{grid-template-columns:minmax(0,1fr)}}
 
+.original-price{color:#71878b;font-size:.82em;margin-right:.45em}.current-price{font-weight:600}.offer-label{display:inline-block;font-size:.65em;font-weight:700;letter-spacing:.03em;color:#245b3d;margin-left:.5em}.offer-controls{border:1px solid #d7e1df;padding:18px;margin:15px 0}.coupon-products{max-height:220px;overflow:auto}.coupon-products label{display:flex;gap:10px;align-items:center}.coupon-products input{width:auto}.coupon-entry{display:flex;gap:10px;margin:15px 0}.coupon-entry input{min-width:0;flex:1}
+

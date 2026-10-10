@@ -21,8 +21,8 @@ export function validateRequest(req,{production=!!process.env.VERCEL}={}){
 export function privileges(current,token,directory,user){
  const verified=current.emailVerified&&token.email_verified===true;
  const active=directory?.status==='Active'&&!directory.deleted&&user?.status!=='Inactive';
- const admin=verified&&active&&token.admin===true&&current.customClaims?.admin===true;
- return{admin:!!admin,adminHead:!!(admin&&token.adminHead===true&&current.customClaims?.adminHead===true&&directory.role==='Admin Head')};
+ const admin=verified&&active&&token.admin===true&&current.customClaims?.admin===true&&token.firebase?.sign_in_provider==='password';
+ return{admin:!!admin,adminHead:!!(admin&&token.adminHead===true&&current.customClaims?.adminHead===true&&directory.role==='Admin Head'&&token.superAdmin===true&&current.customClaims?.superAdmin===true&&directory.superAdmin===true)};
 }
 
 export function responseSecurity(res){
@@ -31,3 +31,4 @@ export function responseSecurity(res){
  res.setHeader('X-Frame-Options','DENY');
  res.setHeader('Content-Type','application/json; charset=utf-8');
 }
+

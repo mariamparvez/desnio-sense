@@ -2,11 +2,13 @@ import {randomUUID,createHash} from 'node:crypto';
 import {auth,appCheck,db,stamp,credential} from './firebase.mjs';
 import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord,modelRequest,corporateEnquiry} from './domain.mjs';
 import {validateRequest,privileges,responseSecurity} from './security.mjs';
+import {couponRecord,couponCode,applyCoupon} from './offers.mjs';
+import {refreshPublicCatalogue} from './public-catalogue.mjs';
 import {paymentSettings} from './razorpay.mjs';
 import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
-const OWNER='designwithmariam@gmail.com';
+const OWNER='hello@desniosense.com';
 const features={payments:false,artworkStorage:false,phoneLogin:false,facebookLogin:false,orderRequests:true};
-const actions=new Set(['corporate-enquiry','profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
+const actions=new Set(['corporate-enquiry','coupons','quote-coupon','admin-activity','profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
 let healthUntil=0;
 const clean=record=>JSON.parse(JSON.stringify(record,(key,value)=>value?.toDate?value.toDate().toISOString():value));
 function audit(actor,action,target){return db.collection('audit').add({actor:actor.uid,action,target,at:stamp()});}
@@ -30,7 +32,7 @@ async function saveProfile(a,data){const p=profile(data),ref=db.doc('users/'+a.u
 async function createOrder(a,data,test=false){
  assert(a.email&&a.email_verified,'Verify your email address before saving an order request.',403);
  const key=orderKey(a.uid,data.key),ref=db.doc('orders/'+key),address=delivery(data.delivery);assert(/^\d{6}$/.test(address.pincode),'Enter a six-digit pincode.');
- assert(!data.coupon,'Discount codes are unavailable until live checkout is configured.');
+ const code=data.coupon?couponCode(data.coupon):'';
  assert(Array.isArray(data.items)&&data.items.length>0&&data.items.length<=25,'Choose between 1 and 25 items.');
  const productIds=[...new Set(data.items.map(i=>id(i.product)))];
  const day=new Date().toISOString().slice(0,10),quota=db.doc('orderLimits/'+a.uid+'-'+day);
@@ -38,7 +40,8 @@ async function createOrder(a,data,test=false){
   const existing=await t.get(ref);if(existing.exists){assert(test?existing.data().paymentMode==='test':!existing.data().paymentMode,'Use a new checkout reference for this payment mode.',409);return existing.data();}
   const requests=(await t.get(quota)).data()?.count||0;assert(requests<5,'You have reached today’s order-request limit. Contact support.',429);
   const products=await t.getAll(...productIds.map(pid=>db.doc('products/'+pid)));
-  const priced=priceOrder(data.items,products.filter(d=>d.exists).map(d=>d.data()));
+  let priced=priceOrder(data.items,products.filter(d=>d.exists).map(d=>d.data()));
+  if(code){const c=(await t.get(db.doc('coupons/'+code))).data();assert(c,'This coupon was not found.');priced=applyCoupon(c,priced);}
   for(const item of priced.items)if(item.phoneModel&&!item.phoneModel.requested){const model=await t.get(db.doc('phoneModels/'+id(item.phoneModel.id)));assert(model.exists&&model.data().status==='Active','Choose an available phone model.');assert(model.data().name===item.phoneModel.name&&model.data().brand===item.phoneModel.brand&&model.data().platform===item.phoneModel.platform,'The phone model changed. Select it again.');}
   const record={id:key,customerId:a.uid,...address,email:a.email,date:day,...priced,status:'Placed',payment:test?'Test pending':'Pending',kind:test?'Payment test':'Order request',...(test?{paymentMode:'test'}:{}),custom:false,createdAt:stamp(),updatedAt:stamp()};
   t.create(ref,record);t.set(quota,{count:requests+1});
@@ -55,32 +58,37 @@ async function people(a,data){
  const previousProfile=uid?(await db.doc('users/'+uid).get()).data():null;
  const previousDirectory=uid?(await db.doc('admins/'+uid).get()).data():null;
  if(type==='customers'&&target?.customClaims?.admin)throw new AppError('Manage administrator accounts in the Admins page.',403);
- if(type==='admins'){assert(data.role==='Admin'||data.role==='Admin Head'||remove,'Choose an admin role.');assert(uid!==a.uid||(!remove&&status==='Active'&&data.role==='Admin Head'),'You cannot remove or demote your current Admin Head account.');assert(uid!=='mvx95s5prSN2SR2PPhoI49pv7HA2'||(!remove&&mail===OWNER&&status==='Active'&&data.role==='Admin Head'),'The owner Admin Head must remain active with its original email.');}
+ if(type==='admins'){assert(uid!==a.uid||(!remove&&status==='Active'&&mail===OWNER),'Your Super Admin must remain active with its original email.');assert(uid===a.uid||data.role==='Admin'||remove,'Only the owner account can be Super Admin.');}
+ const password=type==='admins'&&!remove&&data.password?String(data.password):'';if(password)assert(password.length>=8&&password.length<=128,'Use a password of 8–128 characters.');if(type==='admins'&&!remove&&!uid)assert(password,'Set a password for this admin.');const designation=type==='admins'&&!remove?text(data.designation||'Admin',100):'';
  // Serialise account changes so simultaneous requests cannot remove the final head.
  const lock=db.doc('system/adminLock'),lockId=randomUUID();
  await db.runTransaction(async t=>{const previous=(await t.get(lock)).data();assert(!previous?.until||previous.until<Date.now(),'Another account change is in progress. Try again shortly.',409);t.set(lock,{until:Date.now()+60000,lockId});});
  let created=false,user=target;
  try{
-  if(type==='admins'&&target?.customClaims?.adminHead&&(remove||status==='Inactive'||data.role!=='Admin Head')){const heads=await db.collection('admins').where('role','==','Admin Head').get();assert(heads.docs.filter(d=>d.data().status==='Active').length>1,'Keep at least one active Admin Head.');}
+  if(type==='admins'&&uid!==a.uid&&target?.customClaims?.adminHead&&(remove||status==='Inactive'||data.role!=='Admin Head')){const heads=await db.collection('admins').where('role','==','Admin Head').get();assert(heads.docs.filter(d=>d.data().status==='Active').length>1,'Keep at least one active Admin Head.');}
   if(remove){
    await auth.updateUser(uid,{disabled:true});await auth.revokeRefreshTokens(uid);
    await db.doc((type==='admins'?'admins':'users')+'/'+uid).set({status:'Inactive',deleted:true,updatedAt:stamp()},{merge:true});
    if(type==='admins')await db.doc('users/'+uid).set({status:'Inactive',updatedAt:stamp()},{merge:true});
-   if(type==='admins')await auth.setCustomUserClaims(uid,{...target.customClaims,admin:false,adminHead:false});
+   if(type==='admins')await auth.setCustomUserClaims(uid,{...target.customClaims,admin:false,adminHead:false,superAdmin:false});
    // Historical orders remain; disabling instead of reassigning identity prevents orphaned access.
   }else{
-   if(!user){user=await auth.createUser({email:mail,displayName:name,disabled:status==='Inactive'});created=true;}
-   else await auth.updateUser(uid,{email:mail,displayName:name,disabled:status==='Inactive',...(mail!==target.email?{emailVerified:false}:{})});
+   if(!user){user=await auth.createUser({email:mail,displayName:name,disabled:status==='Inactive',...(type==='admins'?{password,emailVerified:true}:{})});created=true;}
+   else await auth.updateUser(uid,{email:mail,displayName:name,disabled:status==='Inactive',...(mail!==target.email?{emailVerified:type==='admins'}:{}),...(password?{password}:{})});
    const record={id:user.uid,uid:user.uid,name,email:mail,status,deleted:false,updatedAt:stamp()};
-   if(type==='admins'){record.role=data.role;await auth.setCustomUserClaims(user.uid,{...user.customClaims,admin:status==='Active',adminHead:status==='Active'&&data.role==='Admin Head'});await db.doc('admins/'+user.uid).set(record,{merge:true});await db.doc('users/'+user.uid).set({uid:user.uid,id:user.uid,name,email:mail,status,phone:previousProfile?.phone||'',createdAt:previousProfile?.createdAt||stamp(),updatedAt:stamp()},{merge:true});}
+   if(type==='admins'){const superAdmin=user.uid===a.uid;record.role=superAdmin?'Admin Head':'Admin';record.designation=superAdmin?'Super Admin':designation;record.superAdmin=superAdmin;record.updatedBy=a.uid;if(created){record.createdBy=a.uid;record.createdAt=stamp();}if(password)record.passwordUpdatedAt=stamp();await auth.setCustomUserClaims(user.uid,{...user.customClaims,admin:status==='Active',adminHead:status==='Active'&&superAdmin,superAdmin:status==='Active'&&superAdmin});await db.doc('admins/'+user.uid).set(record,{merge:true});await db.doc('users/'+user.uid).set({uid:user.uid,id:user.uid,name,email:mail,status,designation,phone:previousProfile?.phone||'',createdAt:previousProfile?.createdAt||stamp(),updatedAt:stamp()},{merge:true});}
    else{record.phone=phone(data.phone);await db.doc('users/'+user.uid).set({...record,...(created?{createdAt:stamp()}:{})},{merge:true});}
-   if(!created&&(user.uid!==a.uid||mail!==target.email))await auth.revokeRefreshTokens(user.uid);
+   if(!created&&(user.uid!==a.uid||mail!==target.email||password))await auth.revokeRefreshTokens(user.uid);
   }
-  await audit(a,type+':'+(remove?'disable':created?'create':'update'),user.uid);return{saved:true,id:user.uid,signIn:'Google or set password using reset password'};
+  await audit(a,type+':'+(remove?'disable':created?'create':'update'),user.uid);return{saved:true,id:user.uid,signIn:'Email and password'};
  }catch(error){if(created&&user){await auth.deleteUser(user.uid).catch(()=>{});await db.doc('admins/'+user.uid).delete().catch(()=>{});await db.doc('users/'+user.uid).delete().catch(()=>{});}else if(target){await auth.updateUser(target.uid,{email:target.email,displayName:target.displayName||'',disabled:target.disabled,emailVerified:target.emailVerified}).catch(()=>{});await auth.setCustomUserClaims(target.uid,target.customClaims||{}).catch(()=>{});for(const [collection,previous]of [['users',previousProfile],['admins',previousDirectory]])await(previous?db.doc(collection+'/'+target.uid).set(previous):db.doc(collection+'/'+target.uid).delete()).catch(()=>{});}throw error;}
  finally{await db.runTransaction(async t=>{const current=(await t.get(lock)).data();if(current?.lockId===lockId)t.delete(lock);});}
 }
 async function dispatch(a,action,data){
+ if(action==='coupons'){staff(a);assert(['save','delete'].includes(data.operation),'Choose a coupon action.');const code=couponCode(data.id||data.record?.code);if(data.operation==='delete')await db.doc('coupons/'+code).delete();else{const record=couponRecord(data.record);assert(record.code===code,'The coupon code cannot be changed.');for(const productId of record.productIds){const p=await db.doc('products/'+productId).get();assert(p.exists,'An eligible product no longer exists.');}await db.doc('coupons/'+code).set({...record,updatedBy:a.uid,updatedAt:stamp()},{merge:true});}await audit(a,'coupon:'+data.operation,code);return{saved:true};}
+ if(action==='quote-coupon'){const code=couponCode(data.code);assert(Array.isArray(data.items)&&data.items.length&&data.items.length<=25,'Add products to your cart.');const pids=[...new Set(data.items.map(i=>id(i.product)))],products=await db.getAll(...pids.map(pid=>db.doc('products/'+pid))),coupon=(await db.doc('coupons/'+code).get()).data();assert(coupon,'This coupon was not found.');return{quote:applyCoupon(coupon,priceOrder(data.items,products.filter(d=>d.exists).map(d=>d.data())))};}
+ if(action==='admin-activity'){staff(a,true);const directory=await db.collection('admins').get(),uids=directory.docs.map(d=>({uid:d.id})),users=uids.length?(await auth.getUsers(uids)).users:[],events=await db.collection('audit').orderBy('at','desc').limit(50).get();return{accounts:directory.docs.map(d=>({id:d.id,...clean(d.data()),lastSignInAt:users.find(u=>u.uid===d.id)?.metadata.lastSignInTime||''})),events:events.docs.map(d=>({id:d.id,...clean(d.data())}))};}
+
  if(action==='create-payment'){staff(a,true);assert(paymentSettings().enabled,'Test payments are not configured. Customer payments remain disabled.',503);return startTestPayment(a,(await createOrder(a,data,true)).order);}
  if(action==='verify-payment')return verifyTestPayment(a,data);
  if(action==='payment-status')return testPaymentStatus(a,data);
@@ -92,6 +100,7 @@ async function dispatch(a,action,data){
   staff(a);assert(['products','phoneModels','jobs'].includes(data.collection),'Unsupported collection.');const recordId=id(data.id),ref=db.doc(data.collection+'/'+recordId);
   if(data.operation==='delete')await ref.delete();else {let record=data.record;if(data.collection==='products'&&!record.productCode){const prior=await ref.get();record={...record,productCode:prior.data()?.productCode||recordId};}await ref.set({...catalogueRecord(data.collection,record,recordId),updatedAt:stamp()},{merge:true});}
   if(data.requestId){const request=db.doc('phoneModelRequests/'+id(data.requestId));await request.update({status:'Added to catalogue',modelId:recordId,updatedAt:stamp()});}
+  if(['products','phoneModels','jobs'].includes(data.collection))await refreshPublicCatalogue();
   await audit(a,data.collection+':'+data.operation,recordId);return{saved:true};
  }
  if(action==='ticket'){

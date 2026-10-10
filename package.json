@@ -7,7 +7,7 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
     "dev": "node preview.mjs",
-    "test": "node --test server/*.test.mjs"
+    "test": "node --experimental-test-module-mocks --test server/*.test.mjs"
   },
   "engines": {
     "node": ">=22"
@@ -22,3 +22,4 @@
     "uuid": "11.1.1"
   }
 }
+

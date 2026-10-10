@@ -50,16 +50,19 @@
   ],
   "functions": {
     "api/store.mjs": {
-      "includeFiles": "server/**"
+      "includeFiles": "{server/**,pricing.js}"
     },
     "api/razorpay-webhook.mjs": {
-      "includeFiles": "server/**"
+      "includeFiles": "{server/**,pricing.js}"
     },
     "api/shop.mjs": {
-      "includeFiles": "{server/**,products.html,product.html}"
+      "includeFiles": "{server/**,products.html,product.html,pricing.js}"
     },
     "api/product-image.mjs": {
-      "includeFiles": "server/**"
+      "includeFiles": "{server/**,pricing.js}"
+    },
+    "api/catalogue.mjs": {
+      "includeFiles": "{server/**,pricing.js}"
     }
   },
   "redirects": [

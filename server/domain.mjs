@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {offerRecord,pricing} from './offers.mjs';
 export class AppError extends Error { constructor(message,status=400){super(message);this.status=status;} }
 export function assert(condition,message,status=400){if(!condition)throw new AppError(message,status);}
 export function text(value,max=200,required=true){assert(typeof value==='string','Enter valid text.');const result=value.trim();assert(result.length<=max&&(!required||result.length>0),'A required field is empty or too long.');return result;}
@@ -10,7 +11,7 @@ export function image(value){if(!value)return '';assert(typeof value==='string'&
 export function profile(input){return {name:text(input.name,100),phone:phone(input.phone)};}
 export function delivery(input){return {...profile(input),address:text(input.address,500),city:text(input.city,100),pincode:text(input.pincode,6),...(input.state?{state:text(input.state,100)}:{})};}
 export function publishedProduct(p){return !!p&&p.status==='Active'&&p.approved===true&&typeof p.title==='string'&&p.title.trim().length>0&&Number.isFinite(p.price)&&p.price>0;}
-export function modelRequest(input,product){assert(['Android','iPhone'].includes(input.platform),'Choose a phone platform.');const result={platform:input.platform,brand:input.platform==='iPhone'?'Apple':text(input.brand,100),name:text(input.name,150),status:'Pending',payment:'Not paid'};if(input.productId){assert(publishedProduct(product)&&(product.baseId||product.id)==='case','This phone case is unavailable.',409);Object.assign(result,{productId:product.id,productName:product.title,productCode:product.productCode||product.id,productImage:image(product.imageSrc),price:product.price,quantity:number(input.quantity||1,1,20)});assert(Number.isInteger(result.quantity),'Quantity must be a whole number.');}return result;}
+export function modelRequest(input,product){assert(['Android','iPhone'].includes(input.platform),'Choose a phone platform.');const result={platform:input.platform,brand:input.platform==='iPhone'?'Apple':text(input.brand,100),name:text(input.name,150),status:'Pending',payment:'Not paid'};if(input.productId){assert(publishedProduct(product)&&(product.baseId||product.id)==='case','This phone case is unavailable.',409);Object.assign(result,{productId:product.id,productName:product.title,productCode:product.productCode||product.id,productImage:image(product.imageSrc),price:pricing.product(product).price,quantity:number(input.quantity||1,1,20)});assert(Number.isInteger(result.quantity),'Quantity must be a whole number.');}return result;}
 export function priceOrder(cart,products){
  assert(Array.isArray(cart)&&cart.length>0&&cart.length<=25,'Choose between 1 and 25 items.');
  const requested=new Map(),items=cart.map(item=>{
@@ -22,7 +23,7 @@ export function priceOrder(cart,products){
   assert(Array.isArray(p.colours)&&p.colours.includes(item.colour),'Choose an available product colour.');
   let phoneModel=null;
   if((p.baseId||p.id)==='case'){assert(item.phoneModel&&['Android','iPhone'].includes(item.phoneModel.platform),'Select your exact phone model.');phoneModel={platform:item.phoneModel.platform,brand:text(item.phoneModel.brand,100),name:text(item.phoneModel.name,150),requested:!!item.phoneModel.requested};if(item.phoneModel.id)phoneModel.id=id(item.phoneModel.id);}
-  const price=number(p.price,1,1000000);assert(Math.abs(price*100-Math.round(price*100))<0.00001,'Catalogue price has invalid precision.');
+  const price=number(pricing.product(p).price,.01,1000000);assert(Math.abs(price*100-Math.round(price*100))<0.00001,'Catalogue price has invalid precision.');
   return {product:p.id,name:p.title,quantity,price,variant:text(item.variant,180),colour:text(item.colour||'Ivory',50),custom:false,phoneModel,image:image(p.imageSrc||('assets/products/'+p.image+'.jpg'))};
  });
  for(const [product,quantity] of requested){const p=products.find(p=>p.id===product);if(Number.isFinite(p.stock))assert(p.stock>=quantity,'The requested quantity is out of stock.',409);}
@@ -46,6 +47,7 @@ export function catalogueRecord(collection,input,recordId){
   const result={...common,approved,title,name:title,productCode:id(input.productCode||recordId),singular:text(input.singular,100),baseId:base,section:input.section,icon:id(input.icon),image:id(input.image),price,variants:variants.map(v=>text(v,100)),colours:colours.map(v=>text(v,50)),audience,material:text(input.material||'',300,false),desc:text(input.desc||'',2000,active),designer:text(input.designer||'',150,false),collectionName:text(input.collectionName||'',150,false),care:text(input.care||'',2000,false),imageSrc:image(input.imageSrc),galleryImages:(input.galleryImages||[]).slice(0,6).map(image),fresh:!!input.fresh};
   assert(!active||result.imageSrc,'Upload the actual merchandise image before publishing.');
   if(price!==null)assert(Math.abs(price*100-Math.round(price*100))<0.00001,'Use at most two decimal places for price.');
+  result.offer=offerRecord(input.offer,price);
   if(input.stock!=null){result.stock=number(input.stock,0,1000000);assert(Number.isInteger(result.stock),'Stock must be a whole number.');}return result;
  }
  if(collection==='phoneModels'){assert(['Android','iPhone'].includes(input.platform)&&['Active','Inactive'].includes(common.status),'Invalid phone type or status.');return{...common,platform:input.platform,brand:input.platform==='iPhone'?'Apple':text(input.brand,100),name:text(input.name,150),...Object.fromEntries(['frontPhoto','backPhoto','frontTemplate','backTemplate'].map(k=>[k,image(input[k])])),templateVerified:!!input.templateVerified};}
