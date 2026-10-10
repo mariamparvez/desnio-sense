@@ -2,9 +2,11 @@ import {randomUUID} from 'node:crypto';
 import {auth,appCheck,db,stamp,credential} from './firebase.mjs';
 import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey,canCancel,catalogueRecord} from './domain.mjs';
 import {validateRequest,privileges,responseSecurity} from './security.mjs';
+import {paymentSettings} from './razorpay.mjs';
+import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
 const OWNER='designwithmariam@gmail.com';
 const features={payments:false,artworkStorage:false,phoneLogin:false,facebookLogin:false,orderRequests:true};
-const actions=new Set(['profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request']);
+const actions=new Set(['profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
 let healthUntil=0;
 const clean=record=>JSON.parse(JSON.stringify(record,(key,value)=>value?.toDate?value.toDate().toISOString():value));
 function audit(actor,action,target){return db.collection('audit').add({actor:actor.uid,action,target,at:stamp()});}
@@ -25,7 +27,7 @@ async function dailyContentLimit(a,action){
  await db.runTransaction(async t=>{const count=(await t.get(ref)).data()?.count||0;assert(count<20,'You have reached today’s submission limit. Contact us on WhatsApp.',429);t.set(ref,{count:count+1});});
 }
 async function saveProfile(a,data){const p=profile(data),ref=db.doc('users/'+a.uid);await db.runTransaction(async t=>{const previous=(await t.get(ref)).data();t.set(ref,{uid:a.uid,id:a.uid,...p,email:a.email||'',status:previous?.status||'Active',createdAt:previous?.createdAt||stamp(),updatedAt:stamp()});});await auth.updateUser(a.uid,{displayName:p.name});return{profile:{id:a.uid,uid:a.uid,...p,email:a.email,status:'Active'}};}
-async function createOrder(a,data){
+async function createOrder(a,data,test=false){
  assert(a.email&&a.email_verified,'Verify your email address before saving an order request.',403);
  const key=orderKey(a.uid,data.key),ref=db.doc('orders/'+key),address=delivery(data.delivery);assert(/^\d{6}$/.test(address.pincode),'Enter a six-digit pincode.');
  assert(!data.coupon,'Discount codes are unavailable until live checkout is configured.');
@@ -33,12 +35,12 @@ async function createOrder(a,data){
  const productIds=[...new Set(data.items.map(i=>id(i.product)))];
  const day=new Date().toISOString().slice(0,10),quota=db.doc('orderLimits/'+a.uid+'-'+day);
  const order=await db.runTransaction(async t=>{
-  const existing=await t.get(ref);if(existing.exists)return existing.data();
+  const existing=await t.get(ref);if(existing.exists){assert(test?existing.data().paymentMode==='test':!existing.data().paymentMode,'Use a new checkout reference for this payment mode.',409);return existing.data();}
   const requests=(await t.get(quota)).data()?.count||0;assert(requests<5,'You have reached today’s order-request limit. Contact support.',429);
   const products=await t.getAll(...productIds.map(pid=>db.doc('products/'+pid)));
   const priced=priceOrder(data.items,products.filter(d=>d.exists).map(d=>d.data()));
   for(const item of priced.items)if(item.phoneModel&&!item.phoneModel.requested){const model=await t.get(db.doc('phoneModels/'+id(item.phoneModel.id)));assert(model.exists&&model.data().status==='Active','Choose an available phone model.');assert(model.data().name===item.phoneModel.name&&model.data().brand===item.phoneModel.brand&&model.data().platform===item.phoneModel.platform,'The phone model changed. Select it again.');}
-  const record={id:key,customerId:a.uid,...address,email:a.email,date:day,...priced,status:'Placed',payment:'Pending',kind:'Order request',custom:false,createdAt:stamp(),updatedAt:stamp()};
+  const record={id:key,customerId:a.uid,...address,email:a.email,date:day,...priced,status:'Placed',payment:test?'Test pending':'Pending',kind:test?'Payment test':'Order request',...(test?{paymentMode:'test'}:{}),custom:false,createdAt:stamp(),updatedAt:stamp()};
   t.create(ref,record);t.set(quota,{count:requests+1});
   for(const item of priced.items)if(item.phoneModel?.requested){const requestId='PHONE-'+randomUUID();t.create(db.doc('phoneModelRequests/'+requestId),{...item.phoneModel,id:requestId,customerId:a.uid,orderId:key,status:'Pending',createdAt:stamp()});}
   return record;
@@ -79,6 +81,9 @@ async function people(a,data){
  finally{await db.runTransaction(async t=>{const current=(await t.get(lock)).data();if(current?.lockId===lockId)t.delete(lock);});}
 }
 async function dispatch(a,action,data){
+ if(action==='create-payment'){staff(a,true);assert(paymentSettings().enabled,'Test payments are not configured. Customer payments remain disabled.',503);return startTestPayment(a,(await createOrder(a,data,true)).order);}
+ if(action==='verify-payment')return verifyTestPayment(a,data);
+ if(action==='payment-status')return testPaymentStatus(a,data);
  if(action==='profile')return saveProfile(a,data);
  if(action==='create-order')return createOrder(a,data);
  if(action==='cancel-order')return cancelOrder(a,data);
@@ -108,7 +113,7 @@ export default async function handler(req,res){
  responseSecurity(res);
  try{
   const action=new URL(req.url,'https://desnio-sense.vercel.app').searchParams.get('action');
-  if(req.method==='GET'&&action==='health'){if(Date.now()>healthUntil){await credential().getAccessToken();await db.doc('system/health').get();healthUntil=Date.now()+60000;}res.status(200).json({backend:'ready',project:'desniosense',features});return;}
+  if(req.method==='GET'&&action==='health'){if(Date.now()>healthUntil){await credential().getAccessToken();await db.doc('system/health').get();healthUntil=Date.now()+60000;}res.status(200).json({backend:'ready',project:'desniosense',features:{...features,testPayments:paymentSettings().enabled,paymentMode:paymentSettings().mode}});return;}
   const body=validateRequest(req);
   assert(actions.has(action),'Unknown action.',404);
   if(process.env.VERCEL){

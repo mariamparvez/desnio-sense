@@ -17,11 +17,11 @@ Security reduces risk; this application is not guaranteed immune to attacks. The
 
 Enable two-factor authentication on Google/Firebase, GitHub, Vercel, GoDaddy and Razorpay, and keep recovery codes offline. Review team access and remove unused accounts. Enable GoDaddy domain transfer lock. Account MFA and registrar settings are not changed or verified by this code release.
 
-The production origins https://desniosense.com/, https://www.desniosense.com/ and https://desnio-sense.vercel.app/ serve the matching hardened application over HTTPS. All 32 pages and backend health were checked on each origin. Real browser attestation was verified on both custom-domain addresses. The owner controls GoDaddy DNS; this release does not change email or website DNS records. Vercel's management connector does not currently grant project access, so no custom WAF rules are claimed as configured.
+The production origins https://desniosense.com/, https://www.desniosense.com/ and https://desnio-sense.vercel.app/ serve the matching hardened application over HTTPS. All 32 pages and backend health were checked on each origin. Real browser attestation was verified on both custom-domain addresses. The owner controls GoDaddy DNS; this release does not change email or website DNS records. Vercel project management access is now verified. No custom WAF rules are claimed as configured.
 
 Firebase billing remains disabled. reCAPTCHA Essentials has a free monthly assessment allowance; exhaustion can prevent browser attestation and consequently protected operations. Do not silently weaken enforcement or enable billing. Monitor usage in the console. See [official reCAPTCHA billing](https://docs.cloud.google.com/recaptcha/docs/billing-information) and [Firebase backend verification](https://firebase.google.com/docs/app-check/custom-resource-backend).
 
-Payments remain disabled until server-created Razorpay orders, signature/webhook verification and secure keys are configured. Durable artwork storage, phone login and Facebook login remain deferred. Any future payment or third-party integration must update the policy, tests and this document.
+Customer and live payments remain disabled. Admin Head sandbox checkout uses protected server-only keys, stored catalogue totals, exact signature and capture verification, replay-safe notifications and explicit test-only records. Sandbox payments cannot contribute to revenue or fulfilment. See RAZORPAY-SETUP.md for the dashboard webhook configuration still required. Durable artwork storage, phone login and Facebook login remain deferred. Any future payment or third-party integration must update the policy, tests and this document.
 
 ## Incident response
 

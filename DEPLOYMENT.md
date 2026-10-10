@@ -52,3 +52,7 @@ The production backend source revision `8b4571d69974ac149fb940fd434a6e0750cc71e8
 ## Security release
 
 Security source revision `fb163396a7846c15c9bedd716305b2b4d20b9cb6` passed GitHub CI and deployed through Vercel (deployment `7fJXVAL9uth5TGGqBB2hBB5HEVmk`). It passed 35 local integration/attack checks, 36 live integration/attack checks and 12 server tests. The dependency audit reports zero known vulnerabilities. Production API mutations and Firestore enforce App Check; real attestation works on both custom-domain addresses. Browser injection attempts were blocked, all three production origins serve matching source and security headers, and all temporary test identities and attestation registrations were removed. See SECURITY.md and security-tests/. Firebase billing remains disabled. Owner account MFA and domain transfer lock require owner setup and are not claimed as configured.
+
+## Razorpay sandbox release
+
+The protected Production settings enable Admin Head test checkout only. Live/customer payments remain disabled. The native webhook endpoint is `/api/razorpay-webhook`; configure it in Razorpay Test Mode with the matching private webhook secret. Follow RAZORPAY-SETUP.md. Secrets and temporary test identities are excluded from this repository.

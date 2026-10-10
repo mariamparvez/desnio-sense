@@ -27,7 +27,7 @@ The API service account is `desnio-store-api@desniosense.iam.gserviceaccount.com
 
 ## Explicitly deferred by the owner
 
-Payments: obtain Razorpay keys through protected backend configuration. Add server-created payment orders, verified signatures/webhooks, inventory reservations, refunds and idempotent payment events before accepting money. Do not change Pending to Paid from a form or trust browser totals.
+Live payments: sandbox checkout is implemented for Admin Head only; see RAZORPAY-SETUP.md. Production remains disabled. Add server-created payment orders, verified signatures/webhooks, inventory reservations, refunds and idempotent payment events before accepting money. Do not change Pending to Paid from a form or trust browser totals.
 
 Original artwork: the owner selected the free Firebase plan. Custom submission is therefore blocked. Add durable original byte storage, ownership rules, upload type/size validation, source checksums, asset references, original retrieval and source-quality checks before enabling custom orders. Existing local originals do not sync through Firestore. Compressed catalogue images and draft previews are display assets, never production originals.
 

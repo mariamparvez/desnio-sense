@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-10T10:50:48.591Z",
+  "provider": "Mock Razorpay transport; real Firebase Auth/Firestore",
+  "checks": [
+    "Test availability never enables customer or live payments",
+    "Only verified Admin Head can create a sandbox checkout",
+    "Live mode fails closed before creating an order",
+    "Amount is calculated from stored prices, not forged browser totals",
+    "Retries reuse the same Razorpay order",
+    "Matching signatures cannot bypass amount verification",
+    "Ownership, forged signatures and mismatched order IDs are rejected",
+    "Authorization alone never becomes paid or starts production",
+    "Captured test payments remain excluded from real payment and fulfilment",
+    "Signed webhooks update records once, even with altered event headers",
+    "Late failed events cannot downgrade a captured payment",
+    "Forged and malformed notifications cannot mutate checkout records",
+    "Server status reconciliation recovers payments after a closed popup",
+    "Cancelled requests cannot open another checkout",
+    "Uncertain provider failures do not create duplicate payment orders",
+    "Sandbox attempts never change production stock",
+    "Mobile Admin Head checkout keeps the cart when the popup is closed",
+    "Verified sandbox success clears the matching cart and shows accurate confirmation",
+    "Admin business metrics exclude sandbox records",
+    "Admin lists clearly identify sandbox orders on mobile",
+    "Checkout and admin flows run without uncaught errors or policy violations"
+  ],
+  "errors": [],
+  "temporaryFixturesRemoved": true
+}
