@@ -90,7 +90,7 @@ async function dispatch(a,action,data){
  if(action==='people')return people(a,data);
  if(action==='catalogue'){
   staff(a);assert(['products','phoneModels','jobs'].includes(data.collection),'Unsupported collection.');const recordId=id(data.id),ref=db.doc(data.collection+'/'+recordId);
-  if(data.operation==='delete')await ref.delete();else await ref.set({...catalogueRecord(data.collection,data.record,recordId),updatedAt:stamp()},{merge:true});
+  if(data.operation==='delete')await ref.delete();else {let record=data.record;if(data.collection==='products'&&!record.productCode){const prior=await ref.get();record={...record,productCode:prior.data()?.productCode||recordId};}await ref.set({...catalogueRecord(data.collection,record,recordId),updatedAt:stamp()},{merge:true});}
   if(data.requestId){const request=db.doc('phoneModelRequests/'+id(data.requestId));await request.update({status:'Added to catalogue',modelId:recordId,updatedAt:stamp()});}
   await audit(a,data.collection+':'+data.operation,recordId);return{saved:true};
  }
