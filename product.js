@@ -18,6 +18,6 @@ document.querySelector('#delivery-check').onsubmit=e=>{e.preventDefault();docume
 let related=PRODUCTS.filter(p=>p.section===product.section&&p.id!==product.id);if(!related.length)related=PRODUCTS.filter(p=>p.id!==product.id).slice(0,3);document.querySelector('#more-collection-grid').innerHTML=related.map(productCard).join('');document.querySelector('#more-collection-link').href='products.html?section='+product.section;
 const pairs=PRODUCTS.filter(p=>p.section!==product.section).slice(0,2);document.querySelector('#pairs-well').innerHTML='<h2>Pairs well with.</h2>'+pairs.map(p=>'<article class="pair-item"><a href="product.html?product='+p.id+'"><img src="'+productImage(p)+'" alt="'+safe(p.title)+'"></a><div><h3><a href="product.html?product='+p.id+'">'+safe(p.title)+'</a></h3><p>'+money(p.price)+'</p><button data-quick-add="'+p.id+'">Add to cart</button></div></article>').join('');
 
-if((productId&&!PRODUCTS.some(p=>p.id===productId))||product.stock===0){for(const id of ['product-add-cart','product-buy-now']){const button=document.querySelector('#'+id);button.disabled=true;button.textContent=product.stock===0?'Out of stock':'Product unavailable'}}
+if((productId&&!PRODUCTS.some(p=>p.id===productId))||product.stock===0||!product.variants?.length){for(const id of ['product-add-cart','product-buy-now']){const button=document.querySelector('#'+id);button.disabled=true;button.textContent=product.stock===0?'Out of stock':!product.variants?.length?'Options coming soon':'Product unavailable'}}
 
 })().catch(error=>DS.fail(error));

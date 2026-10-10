@@ -36,7 +36,7 @@ export function catalogueRecord(collection,input,recordId){
   const base=id(input.baseId||recordId);assert(['tshirt','jersey','cap','hoodie','sweatshirt','case','tote','bottle','mug','plate','journal','notepad','sticker'].includes(base),'Choose a supported product canvas.');
   const active=common.status==='Active',approved=input.approved===true;
   const variants=input.variants||[],colours=input.colours||[];
-  assert(Array.isArray(variants)&&variants.length<=30&&(!active||variants.length>0),'Add product options before publishing.');
+  assert(Array.isArray(variants)&&variants.length<=30,'Enter valid product options.');
   assert(Array.isArray(colours)&&colours.length<=30&&(!active||colours.length>0),'Add product colours before publishing.');
   const audience=text(input.audience||'Unisex',30);assert(['Women','Men','Unisex','Couples','Kids'].includes(audience),'Choose a product audience.');
   assert(!active||approved,'Approve this merchandise before publishing.');
