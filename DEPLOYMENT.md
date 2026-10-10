@@ -19,7 +19,7 @@ Use only the contents of Desnio-Sense-Website as the repository root. The full t
 - Root Directory: repository root; if you place the frontend inside a larger repository, select that frontend subdirectory.
 - Build Command: `npm run build`.
 - Output Directory: `dist`.
-- Node: **22**.
+- Node: **24.x**, matching the connected Vercel project.
 - Install the locked Node dependencies for the Firebase/Vercel API.
 - Keep `.html` routes; vercel.json deliberately does not use a single-page application rewrite.
 
@@ -56,3 +56,7 @@ Security source revision `fb163396a7846c15c9bedd716305b2b4d20b9cb6` passed GitHu
 ## Razorpay sandbox release
 
 The protected Production settings enable Admin Head test checkout only. Live/customer payments remain disabled. The native webhook endpoint is `/api/razorpay-webhook`; configure it in Razorpay Test Mode with the matching private webhook secret. Follow RAZORPAY-SETUP.md. Secrets and temporary test identities are excluded from this repository.
+
+## Verified Razorpay sandbox release
+
+Source revision `a6204d84be5ff1d9eedabcacc309a0cac2db72db` passed GitHub CI and deployed through Vercel as `dpl_7etkXiueyGNM3Ps2sYmR3rDpqiwq`. All 10 checks against the actual Razorpay Test Mode passed on `https://www.desniosense.com`: server-priced order creation, retry reuse, sandbox bank success, captured-payment verification, matching-cart clearing, test confirmation and signed/idempotent webhook reconciliation. The release also passed 21 mocked-gateway/real-Firebase integration checks, 19 server tests and all 36 existing production security/backend/browser regression checks. Temporary test accounts, records and attestation registrations were removed. See `payment-tests/`. The dashboard webhook still needs registration using the canonical `www` URL in RAZORPAY-SETUP.md; this test validated the deployed receiver directly, not an unattended Razorpay delivery. Live/customer payments remain disabled, and Firebase remains on the free plan.

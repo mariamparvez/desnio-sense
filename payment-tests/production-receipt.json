@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-10T11:15:42.404Z",
+  "origin": "https://www.desniosense.com",
+  "provider": "Actual Razorpay Test Mode; no real money charged",
+  "checks": [
+    "Production enables only sandbox checkout",
+    "Production rejects customer test-payment access",
+    "Actual Razorpay test credentials authenticate and create the correct INR order",
+    "Actual Razorpay checkout retries reuse the same provider order",
+    "Actual Razorpay API confirms the unpaid sandbox status",
+    "Deployed native webhook rejects invalid signatures",
+    "Actual Razorpay SDK opens its sandbox payment interface",
+    "Actual sandbox capture is verified server-side, clears the cart and opens test confirmation without fulfilment",
+    "Deployed signed webhook reconciles a real captured test payment and rejects duplicate processing",
+    "Actual checkout loads without site CSP violations or uncaught errors"
+  ],
+  "errors": [],
+  "temporaryFixturesRemoved": true,
+  "dashboardWebhookConfigured": false,
+  "sourceRevision": "a6204d84be5ff1d9eedabcacc309a0cac2db72db",
+  "deploymentId": "dpl_7etkXiueyGNM3Ps2sYmR3rDpqiwq"
+}
