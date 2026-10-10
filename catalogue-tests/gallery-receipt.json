@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-10T16:06:38.384Z",
+  "checks": [
+    {
+      "width": 390,
+      "displayRatio": "4:5",
+      "originalPixels": {
+        "width": 3072,
+        "height": 4608
+      },
+      "zoomButtons": true,
+      "dragPan": true,
+      "keyboardClose": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "displayRatio": "4:5",
+      "originalPixels": {
+        "width": 3072,
+        "height": 4608
+      },
+      "zoomButtons": true,
+      "dragPan": true,
+      "keyboardClose": true,
+      "noOverflow": true
+    }
+  ]
+}

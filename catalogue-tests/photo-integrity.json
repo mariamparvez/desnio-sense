@@ -1,0 +1,350 @@
+{
+  "photos": 43,
+  "products": 14,
+  "images": [
+    {
+      "ref": "1",
+      "path": "assets/merch/product-1/photo-1.webp",
+      "bytes": 1460542,
+      "width": 1312,
+      "height": 1199,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "1",
+      "path": "assets/merch/product-1/photo-2.webp",
+      "bytes": 1556190,
+      "width": 1312,
+      "height": 1199,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "1",
+      "path": "assets/merch/product-1/photo-3.webp",
+      "bytes": 1400850,
+      "width": 1070,
+      "height": 1470,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "1",
+      "path": "assets/merch/product-1/photo-4.webp",
+      "bytes": 1402546,
+      "width": 1024,
+      "height": 1536,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "2",
+      "path": "assets/merch/product-2/photo-1.webp",
+      "bytes": 2941512,
+      "width": 2348,
+      "height": 2678,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "2",
+      "path": "assets/merch/product-2/photo-2.webp",
+      "bytes": 4492208,
+      "width": 2348,
+      "height": 2678,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "2",
+      "path": "assets/merch/product-2/photo-3.webp",
+      "bytes": 4633052,
+      "width": 2348,
+      "height": 2678,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "2",
+      "path": "assets/merch/product-2/photo-4.webp",
+      "bytes": 4578034,
+      "width": 2348,
+      "height": 2678,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "2",
+      "path": "assets/merch/product-2/photo-5.webp",
+      "bytes": 4368466,
+      "width": 2348,
+      "height": 2678,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "3",
+      "path": "assets/merch/product-3/photo-1.webp",
+      "bytes": 2861648,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "3",
+      "path": "assets/merch/product-3/photo-2.webp",
+      "bytes": 2941726,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "3",
+      "path": "assets/merch/product-3/photo-3.webp",
+      "bytes": 2172162,
+      "width": 2106,
+      "height": 1680,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "3",
+      "path": "assets/merch/product-3/photo-4.webp",
+      "bytes": 2674658,
+      "width": 2106,
+      "height": 1680,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "4",
+      "path": "assets/merch/product-4/photo-1.webp",
+      "bytes": 8471924,
+      "width": 3072,
+      "height": 4608,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "4",
+      "path": "assets/merch/product-4/photo-2.webp",
+      "bytes": 9244738,
+      "width": 3072,
+      "height": 4608,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "4",
+      "path": "assets/merch/product-4/photo-3.webp",
+      "bytes": 5361844,
+      "width": 3936,
+      "height": 3597,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "4",
+      "path": "assets/merch/product-4/photo-4.webp",
+      "bytes": 6047724,
+      "width": 3936,
+      "height": 3597,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "4",
+      "path": "assets/merch/product-4/photo-5.webp",
+      "bytes": 7850048,
+      "width": 3936,
+      "height": 3597,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "5",
+      "path": "assets/merch/product-5/photo-1.webp",
+      "bytes": 1472122,
+      "width": 1024,
+      "height": 1536,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "5",
+      "path": "assets/merch/product-5/photo-2.webp",
+      "bytes": 1445124,
+      "width": 1024,
+      "height": 1536,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "5",
+      "path": "assets/merch/product-5/photo-3.webp",
+      "bytes": 1536196,
+      "width": 1083,
+      "height": 1452,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "6",
+      "path": "assets/merch/product-6/photo-1.webp",
+      "bytes": 2114726,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "6",
+      "path": "assets/merch/product-6/photo-2.webp",
+      "bytes": 2241044,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "6",
+      "path": "assets/merch/product-6/photo-3.webp",
+      "bytes": 2002912,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "6",
+      "path": "assets/merch/product-6/photo-4.webp",
+      "bytes": 2002652,
+      "width": 1536,
+      "height": 2304,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "7",
+      "path": "assets/merch/product-7/photo-1.webp",
+      "bytes": 2056186,
+      "width": 2048,
+      "height": 3072,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "7",
+      "path": "assets/merch/product-7/photo-2.webp",
+      "bytes": 3192680,
+      "width": 2048,
+      "height": 3072,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "7",
+      "path": "assets/merch/product-7/photo-3.webp",
+      "bytes": 3361570,
+      "width": 2048,
+      "height": 3072,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "7",
+      "path": "assets/merch/product-7/photo-4.webp",
+      "bytes": 3242680,
+      "width": 2048,
+      "height": 3072,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "8",
+      "path": "assets/merch/product-8/photo-1.webp",
+      "bytes": 1276508,
+      "width": 1312,
+      "height": 1199,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "8",
+      "path": "assets/merch/product-8/photo-2.webp",
+      "bytes": 1222692,
+      "width": 1312,
+      "height": 1199,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "9",
+      "path": "assets/merch/product-9/photo-1.webp",
+      "bytes": 2105066,
+      "width": 1968,
+      "height": 1799,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "9",
+      "path": "assets/merch/product-9/photo-2.webp",
+      "bytes": 825678,
+      "width": 1968,
+      "height": 1799,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "9",
+      "path": "assets/merch/product-9/photo-3.webp",
+      "bytes": 1690754,
+      "width": 1968,
+      "height": 1799,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "10",
+      "path": "assets/merch/product-10/photo-1.webp",
+      "bytes": 10119726,
+      "width": 5248,
+      "height": 4796,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "10",
+      "path": "assets/merch/product-10/photo-2.webp",
+      "bytes": 10916836,
+      "width": 5248,
+      "height": 4796,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "10",
+      "path": "assets/merch/product-10/photo-3.webp",
+      "bytes": 10119726,
+      "width": 5248,
+      "height": 4796,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "10",
+      "path": "assets/merch/product-10/photo-4.webp",
+      "bytes": 9207188,
+      "width": 5248,
+      "height": 4796,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "12",
+      "path": "assets/merch/product-12/photo-1.webp",
+      "bytes": 5254528,
+      "width": 2244,
+      "height": 2804,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "12",
+      "path": "assets/merch/product-12/photo-2.webp",
+      "bytes": 4828638,
+      "width": 2386,
+      "height": 2638,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "13",
+      "path": "assets/merch/product-13/photo-1.webp",
+      "bytes": 1206720,
+      "width": 1236,
+      "height": 1273,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "14",
+      "path": "assets/merch/product-14/photo-1.webp",
+      "bytes": 1745186,
+      "width": 1024,
+      "height": 1536,
+      "pixelsUnchanged": true
+    },
+    {
+      "ref": "15",
+      "path": "assets/merch/product-15/photo-1.webp",
+      "bytes": 1428302,
+      "width": 1079,
+      "height": 1457,
+      "pixelsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-10T16:00:13.618Z",
+  "origin": "https://www.desniosense.com",
+  "checks": [
+    "Initial HTML has honest coming-soon catalogue: /products.html",
+    "Initial HTML has honest coming-soon catalogue: /products.html?section=apparel&audience=Women",
+    "Initial HTML has honest coming-soon catalogue: /products.html?section=apparel&audience=Couples",
+    "Hidden/unavailable product returns 404: tshirt",
+    "Hidden/unavailable product returns 404: MERCH-1",
+    "Hidden/unavailable product returns 404: missing-product",
+    "Dynamic sitemap includes ten public pages and excludes drafts",
+    "Duplicate index route redirects to the canonical homepage",
+    "SEO metadata and security headers: index",
+    "SEO metadata and security headers: about",
+    "SEO metadata and security headers: contact",
+    "SEO metadata and security headers: careers",
+    "SEO metadata and security headers: faq",
+    "SEO metadata and security headers: returns",
+    "SEO metadata and security headers: terms",
+    "SEO metadata and security headers: copyright",
+    "SEO metadata and security headers: login",
+    "SEO metadata and security headers: signup",
+    "SEO metadata and security headers: admin-products",
+    "Firebase-backed API remains ready",
+    "Public pages connect and fit 390px without sample products",
+    "Public pages connect and fit 1440px without sample products"
+  ]
+}

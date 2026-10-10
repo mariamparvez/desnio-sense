@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-10T16:08:57.056Z",
+  "checks": [
+    "Anonymous visitors and customers cannot edit merchandise",
+    "Admin can create an unpriced draft without inventing sizes or stock",
+    "Admin description edits persist in Firebase",
+    "Publishing is denied without approval and actual price/options",
+    "Private drafts cannot be opened as buyer products",
+    "Direct public database access to drafts is denied",
+    "Mobile admin form edits an unpriced draft successfully",
+    "Admin can delete a draft",
+    "All fourteen owner products retain the requested names and draft status"
+  ],
+  "temporaryFixturesRemoved": true
+}
