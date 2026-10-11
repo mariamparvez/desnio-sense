@@ -98,10 +98,9 @@ async function dispatch(a,action,data){
  if(action==='people')return people(a,data);
  if(action==='catalogue'){
   staff(a);assert(['products','phoneModels','jobs'].includes(data.collection),'Unsupported collection.');const recordId=id(data.id),ref=db.doc(data.collection+'/'+recordId);
-  if(data.operation==='delete')await ref.delete();else {let record=data.record;if(data.collection==='products'&&!record.productCode){const prior=await ref.get();record={...record,productCode:prior.data()?.productCode||recordId};}await ref.set({...catalogueRecord(data.collection,record,recordId),updatedAt:stamp()},{merge:true});}
-  if(data.requestId){const request=db.doc('phoneModelRequests/'+id(data.requestId));await request.update({status:'Added to catalogue',modelId:recordId,updatedAt:stamp()});}
-  if(['products','phoneModels','jobs'].includes(data.collection))await refreshPublicCatalogue();
-  await audit(a,data.collection+':'+data.operation,recordId);return{saved:true};
+  assert(['save','delete'].includes(data.operation),'Unsupported catalogue operation.');let record=null;
+  if(data.operation==='save'){let input=data.record;if(data.collection==='products'&&!input.productCode){const prior=await ref.get();input={...input,productCode:prior.data()?.productCode||recordId};}record={...catalogueRecord(data.collection,input,recordId),updatedAt:new Date().toISOString()};}
+  const catalogue=await refreshPublicCatalogue({collection:data.collection,id:recordId,record,requestId:data.requestId?id(data.requestId):null,audit:{id:randomUUID(),actor:a.uid,action:data.collection+':'+data.operation,target:recordId,at:new Date().toISOString()}});return{saved:true,record,catalogue};
  }
  if(action==='ticket'){
   const ticketId='DS-TK-'+randomUUID(),ticket={id:ticketId,customerId:a.uid,name:text(data.name,100),email:a.email||'',phone:phone(data.phone),category:text(data.category,100),order:text(data.order||'',100,false),message:text(data.message,5000),status:'Open',notes:'',date:new Date().toISOString().slice(0,10),createdAt:stamp()};await db.doc('tickets/'+ticketId).create(ticket);return{ticket:clean(ticket)};
@@ -139,4 +138,3 @@ export default async function handler(req,res){
   const user=await actor(req);await rate(user,action,['ticket','application','model-request'].includes(action)?5:30);await dailyContentLimit(user,action);const result=await dispatch(user,action,body);res.status(200).json(result);
  }catch(error){const status=error instanceof AppError?error.status:error.code?.startsWith('auth/')?400:503;const message=error instanceof AppError?error.message:error.code?.startsWith('auth/')?'The account could not be changed. Check its email and current status.':'The backend could not complete this request. Please retry or contact support.';res.status(status).json({error:message});}
 }
-
