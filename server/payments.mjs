@@ -4,7 +4,7 @@ import {assert,id,AppError} from './domain.mjs';
 import {paymentSettings,providerId,signatureMatches,paymentState,razorpayClient} from './razorpay.mjs';
 
 const clean=value=>JSON.parse(JSON.stringify(value,(k,v)=>v?.toDate?v.toDate().toISOString():v));
-function enabled(){const settings=paymentSettings();assert(settings.enabled,'Razorpay test checkout is not configured. Live payments remain disabled.',503);return settings;}
+function enabled(){const settings=paymentSettings(process.env,'test');assert(settings.enabled,'Razorpay test checkout is not configured.',503);return settings;}
 function head(a){assert(a.adminHead&&a.email_verified,'Only Admin Head can run test payments.',403);}
 async function owned(a,value){head(a);const ref=db.doc('paymentSessions/'+id(value)),s=(await ref.get()).data();assert(s&&s.customerId===a.uid&&s.mode==='test','Test checkout not found.',404);return{ref,s};}
 const checkout=(settings,s,order)=>({keyId:settings.keyId,mode:'test',order:clean(order),amount:s.amount,currency:'INR',providerOrderId:s.providerOrderId,payment:order.payment});
@@ -70,3 +70,4 @@ export async function paymentWebhook(body,digest,eventId){
  const result=await reconcile(session,payment?.id,{ref:events,record:{mode:'test',orderId:session.orderId,providerOrderId:orderId,event:body.event,eventId:typeof eventId==='string'?eventId.slice(0,128):'',digest,at:stamp()}});
  return{received:true,...(result.duplicate?{duplicate:true}:{})};
 }
+

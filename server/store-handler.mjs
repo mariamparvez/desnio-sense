@@ -6,9 +6,10 @@ import {couponRecord,couponCode,applyCoupon} from './offers.mjs';
 import {refreshPublicCatalogue} from './public-catalogue.mjs';
 import {paymentSettings} from './razorpay.mjs';
 import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
+import {startLivePayment,verifyLivePayment,livePaymentStatus,cancelLiveOrder} from './live-payments.mjs';
 const OWNER='hello@desniosense.com';
 const features={payments:false,artworkStorage:false,phoneLogin:false,facebookLogin:false,orderRequests:true};
-const actions=new Set(['corporate-enquiry','coupons','quote-coupon','admin-activity','profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
+const actions=new Set(['create-live-payment','verify-live-payment','live-payment-status','corporate-enquiry','coupons','quote-coupon','admin-activity','profile','create-order','cancel-order','people','catalogue','ticket','update-ticket','update-order','newsletter','application','model-request','create-payment','verify-payment','payment-status']);
 let healthUntil=0;
 const clean=record=>JSON.parse(JSON.stringify(record,(key,value)=>value?.toDate?value.toDate().toISOString():value));
 function audit(actor,action,target){return db.collection('audit').add({actor:actor.uid,action,target,at:stamp()});}
@@ -89,18 +90,21 @@ async function dispatch(a,action,data){
  if(action==='quote-coupon'){const code=couponCode(data.code);assert(Array.isArray(data.items)&&data.items.length&&data.items.length<=25,'Add products to your cart.');const pids=[...new Set(data.items.map(i=>id(i.product)))],products=await db.getAll(...pids.map(pid=>db.doc('products/'+pid))),coupon=(await db.doc('coupons/'+code).get()).data();assert(coupon,'This coupon was not found.');return{quote:applyCoupon(coupon,priceOrder(data.items,products.filter(d=>d.exists).map(d=>d.data())))};}
  if(action==='admin-activity'){staff(a,true);const directory=await db.collection('admins').get(),uids=directory.docs.map(d=>({uid:d.id})),users=uids.length?(await auth.getUsers(uids)).users:[],events=await db.collection('audit').orderBy('at','desc').limit(50).get();return{accounts:directory.docs.map(d=>({id:d.id,...clean(d.data()),lastSignInAt:users.find(u=>u.uid===d.id)?.metadata.lastSignInTime||''})),events:events.docs.map(d=>({id:d.id,...clean(d.data())}))};}
 
- if(action==='create-payment'){staff(a,true);assert(paymentSettings().enabled,'Test payments are not configured. Customer payments remain disabled.',503);return startTestPayment(a,(await createOrder(a,data,true)).order);}
+ if(action==='create-live-payment')return startLivePayment(a,data);
+ if(action==='verify-live-payment')return verifyLivePayment(a,data);
+ if(action==='live-payment-status')return livePaymentStatus(a,data);
+ if(action==='create-payment'){staff(a,true);assert(paymentSettings(process.env,'test').enabled,'Test payments are not configured. Customer payments remain disabled.',503);return startTestPayment(a,(await createOrder(a,data,true)).order);}
  if(action==='verify-payment')return verifyTestPayment(a,data);
  if(action==='payment-status')return testPaymentStatus(a,data);
  if(action==='profile')return saveProfile(a,data);
  if(action==='create-order')return createOrder(a,data);
- if(action==='cancel-order')return cancelOrder(a,data);
+ if(action==='cancel-order'){const o=(await db.doc('orders/'+id(data.id)).get()).data();return o?.paymentMode==='live'?cancelLiveOrder(a,data):cancelOrder(a,data);}
  if(action==='people')return people(a,data);
  if(action==='catalogue'){
   staff(a);assert(['products','phoneModels','jobs'].includes(data.collection),'Unsupported collection.');const recordId=id(data.id),ref=db.doc(data.collection+'/'+recordId);
   assert(['save','delete'].includes(data.operation),'Unsupported catalogue operation.');let record=null;
   if(data.operation==='save'){let input=data.record;if(data.collection==='products'&&!input.productCode){const prior=await ref.get();input={...input,productCode:prior.data()?.productCode||recordId};}record={...catalogueRecord(data.collection,input,recordId),updatedAt:new Date().toISOString()};}
-  const catalogue=await refreshPublicCatalogue({collection:data.collection,id:recordId,record,requestId:data.requestId?id(data.requestId):null,audit:{id:randomUUID(),actor:a.uid,action:data.collection+':'+data.operation,target:recordId,at:new Date().toISOString()}});return{saved:true,record,catalogue};
+  const catalogue=await refreshPublicCatalogue({collection:data.collection,id:recordId,record,hasStockBaseline:data.collection==='products'&&Object.hasOwn(data.record||{},'stockBaseline'),stockBaseline:data.record?.stockBaseline??null,requestId:data.requestId?id(data.requestId):null,audit:{id:randomUUID(),actor:a.uid,action:data.collection+':'+data.operation,target:recordId,at:new Date().toISOString()}});return{saved:true,record,catalogue};
  }
  if(action==='ticket'){
   const ticketId='DS-TK-'+randomUUID(),ticket={id:ticketId,customerId:a.uid,name:text(data.name,100),email:a.email||'',phone:phone(data.phone),category:text(data.category,100),order:text(data.order||'',100,false),message:text(data.message,5000),status:'Open',notes:'',date:new Date().toISOString().slice(0,10),createdAt:stamp()};await db.doc('tickets/'+ticketId).create(ticket);return{ticket:clean(ticket)};
@@ -109,7 +113,7 @@ async function dispatch(a,action,data){
   staff(a);assert(['Open','In progress','Resolved'].includes(data.status),'Invalid ticket status.');await db.doc('tickets/'+id(data.id)).update({status:data.status,notes:text(data.notes||'',5000,false),updatedAt:stamp()});await audit(a,'ticket:update',data.id);return{saved:true};
  }
  if(action==='update-order'){
-  staff(a);assert(['Placed','Processing','Shipped','Delivered','Cancelled'].includes(data.status),'Invalid fulfilment status.');
+  staff(a);assert(['Placed','Processing','Shipped','Delivered','Cancelled'].includes(data.status),'Invalid fulfilment status.');if(data.status==='Cancelled'){const current=(await db.doc('orders/'+id(data.id)).get()).data();if(current?.paymentMode==='live')return cancelLiveOrder(a,{...data,reason:'Admin cancellation'});}
   const ref=db.doc('orders/'+id(data.id));await db.runTransaction(async t=>{const order=(await t.get(ref)).data();assert(order,'Order not found.',404);assert(!data.payment||data.payment===order.payment,'Payment state is controlled by verified payment processing.');assert(!['Processing','Shipped','Delivered'].includes(data.status)||order.payment==='Paid','Unpaid order requests cannot enter production or shipment.',409);const transitions={Placed:['Placed','Processing','Cancelled'],Processing:['Processing','Shipped','Cancelled'],Shipped:['Shipped','Delivered'],Delivered:['Delivered'],Cancelled:['Cancelled']};assert(transitions[order.status]?.includes(data.status),'This order status cannot move to the selected stage.',409);t.update(ref,{status:data.status,updatedAt:stamp(),tracking:text(data.tracking||'',200,false)});});await audit(a,'order:update',data.id);return{saved:true};
  }
  if(action==='newsletter'){await db.doc('subscribers/'+a.uid).set({customerId:a.uid,email:a.email,consent:true,updatedAt:stamp()});return{saved:true};}
@@ -126,7 +130,7 @@ export default async function handler(req,res){
  responseSecurity(res);
  try{
   const action=new URL(req.url,'https://desnio-sense.vercel.app').searchParams.get('action');
-  if(req.method==='GET'&&action==='health'){if(Date.now()>healthUntil){await credential().getAccessToken();await db.doc('system/health').get();healthUntil=Date.now()+60000;}res.status(200).json({backend:'ready',project:'desniosense',features:{...features,testPayments:paymentSettings().enabled,paymentMode:paymentSettings().mode}});return;}
+  if(req.method==='GET'&&action==='health'){if(Date.now()>healthUntil){await credential().getAccessToken();await db.doc('system/health').get();healthUntil=Date.now()+60000;}res.status(200).json({backend:'ready',project:'desniosense',features:{...features,payments:paymentSettings(process.env,'live').enabled,testPayments:paymentSettings(process.env,'test').enabled,paymentMode:paymentSettings(process.env,'live').enabled?'live':'test'}});return;}
   const body=validateRequest(req);
   assert(actions.has(action),'Unknown action.',404);
   if(process.env.VERCEL){
