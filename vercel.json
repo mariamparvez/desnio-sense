@@ -63,6 +63,9 @@
     },
     "api/catalogue.mjs": {
       "includeFiles": "{server/**,pricing.js}"
+    },
+    "api/payment-readiness.mjs": {
+      "includeFiles": "{server/**,pricing.js}"
     }
   },
   "redirects": [
