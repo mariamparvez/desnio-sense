@@ -16,11 +16,11 @@ test('Unavailable products return 404 and noindex without a fallback product',()
 test('Sitemap escapes collection queries and excludes drafts, accounts and samples',()=>{const xml=sitemap([p,{...p,id:'draft',status:'Draft'}]);assert(xml.includes('audience=Women'));assert(xml.includes('&amp;audience'));assert(!xml.includes('product=draft'));for(const route of ['admin-login','login.html','account.html','payment.html'])assert(!xml.includes(route));});
 
 test('Category navigation is crawlable HTML with working section and audience URLs before JavaScript',()=>{
- const men={...p,id:'men',audience:'Men'},html=renderCollection(template,[p,men],new URLSearchParams('section=apparel'));
+ const men={...p,id:'men',audience:'Men',icon:'tshirt'},html=renderCollection(template,[p,men],new URLSearchParams('section=apparel'));
  assert.match(html,/<a data-section="accessories" href="products.html\?section=accessories">/);
  const rail=html.match(/id="category-rail"[^>]*>([\s\S]*?)<\/div>/)[1];
  assert(rail.includes('href="https://www.desniosense.com/products.html?section=apparel&amp;type=tshirt&amp;audience=Women"'));
- assert(rail.includes('audience=Men'));assert(!rail.includes(p.desc));
+ assert(rail.includes('audience=Men'));assert(rail.includes('assets/icons/shirt.png'));assert(!rail.includes('assets/icons/tshirt.png'));assert(!rail.includes(p.desc));
  for(const link of collectionLinks([p,men],'apparel'))assert.equal(collectionInfo(new URL(link.url).searchParams).url,link.url);
 });
 

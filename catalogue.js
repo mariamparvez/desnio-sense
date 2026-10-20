@@ -16,6 +16,7 @@ const PRODUCTS=[
  {id:'sticker',name:'Stickers',singular:'Sticker',section:'stationery',icon:'sticker',image:'sticker',desc:'Small designs. Endless possibilities.',style:'graphic'}
 ];
 const productImage=p=>p.imageSrc||((p.baseId||p.id)==='sweatshirt'?'assets/blanks/sweatshirt-front.png':'assets/products/'+p.image+'.jpg');
-const iconPath=p=>'assets/icons/'+p.icon+(p.icon==='sweatshirt'?'.svg':'.png');
+const iconPath=p=>'assets/icons/'+(p.icon==='tshirt'?'shirt':p.icon)+(p.icon==='sweatshirt'?'.svg':'.png');
+
 
 
