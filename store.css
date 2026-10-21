@@ -49,3 +49,9 @@
 .original-price{color:#71878b;font-size:.82em;margin-right:.45em}.current-price{font-weight:600}.offer-label{display:inline-block;font-size:.65em;font-weight:700;letter-spacing:.03em;color:#245b3d;margin-left:.5em}.offer-controls{border:1px solid #d7e1df;padding:18px;margin:15px 0}.coupon-products{max-height:220px;overflow:auto}.coupon-products label{display:flex;gap:10px;align-items:center}.coupon-products input{width:auto}.coupon-entry{display:flex;gap:10px;margin:15px 0}.coupon-entry input{min-width:0;flex:1}
 
 .catalogue-cover-choice>div{display:flex;gap:12px;overflow-x:auto;padding:4px}.catalogue-cover-choice label{flex:0 0 110px;display:grid;gap:6px;position:relative;cursor:pointer}.catalogue-cover-choice img{width:110px;height:138px;object-fit:cover;border:2px solid var(--line)}.catalogue-cover-choice label:has(input:checked) img{border-color:var(--ink)}.catalogue-cover-choice input{width:auto}.catalogue-cover-choice span{font-size:12px}
+
+/* Password recovery stays a quiet, keyboard-accessible link on both sign-in pages. */
+.auth-panel #reset-password{appearance:none;display:block;width:max-content;max-width:100%;min-height:44px;margin:12px 0 8px;padding:8px 0;border:0;border-radius:3px;background:transparent;color:var(--teal);font:inherit;font-size:14px;font-weight:500;line-height:1.5;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--border);cursor:pointer}
+.auth-panel #reset-password:hover{color:var(--muted);text-decoration-color:currentColor}
+.auth-panel #reset-password:focus-visible{outline:2px solid var(--muted);outline-offset:4px}
+.auth-panel #reset-password:disabled{opacity:.55;cursor:wait}
