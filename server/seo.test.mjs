@@ -59,3 +59,12 @@ test('Home brand identity is consistent and metadata replacement preserves owner
 });
 
 
+
+test('Product image endpoints retain crawl access; IndexNow proof is not a search page',async()=>{
+ const config=JSON.parse(await fs.readFile(new URL('../vercel.json',import.meta.url),'utf8'));
+ const robots=await fs.readFile(new URL('../robots.txt',import.meta.url),'utf8');
+ assert(robots.includes('Allow: /api/product-image'));
+ assert(!config.headers.some(rule=>['/api/:path*','/api/(.*)'].includes(rule.source)&&rule.headers.some(h=>h.key==='X-Robots-Tag'&&h.value.includes('noindex'))));
+ const proof=config.headers.find(rule=>rule.source==='/d6000cef599a10daf917e7fd882d5b25.txt');
+ assert(proof.headers.some(h=>h.key==='X-Robots-Tag'&&h.value==='noindex, nofollow'));
+});

@@ -48,15 +48,6 @@
       ]
     },
     {
-      "source": "/api/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
       "source": "/d6000cef599a10daf917e7fd882d5b25.txt",
       "headers": [
         {
