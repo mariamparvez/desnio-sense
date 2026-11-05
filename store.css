@@ -55,3 +55,10 @@
 .auth-panel #reset-password:hover{color:var(--muted);text-decoration-color:currentColor}
 .auth-panel #reset-password:focus-visible{outline:2px solid var(--muted);outline-offset:4px}
 .auth-panel #reset-password:disabled{opacity:.55;cursor:wait}
+
+
+/* Keep payable prices readable beside crossed-out reference prices on small cards. */
+.listing-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px}
+.listing-price .original-price{margin-right:0}
+.listing-price .current-price{font-size:14px;color:var(--teal);margin-left:0}
+.listing-price .offer-label{margin-left:0}
