@@ -27,7 +27,7 @@ const DS={
 };
 DS.ready.catch(()=>{});
 DS.timeout=setTimeout(()=>DS._reject(new Error('The store could not connect to Firebase. Check your internet connection and reload.')),25000);
-function priceMarkup(p){const v=DesnioPricing.product(p);return(v.onOffer?(v.referenceOnly?'<span class="sr-only">Reference price </span>':'')+'<del class="original-price">'+money(v.originalPrice)+'</del> ':'')+'<span class="current-price">'+money(v.price)+'</span>'+(v.onOffer?' <span class="offer-label">'+(v.referenceOnly?'Special price':p.offer.type==='percent'?safe(p.offer.value)+'% OFF':money(p.offer.value)+' OFF')+'</span>':'');}
+function priceMarkup(p){const v=DesnioPricing.product(p);return(v.onOffer?'<del class="original-price">'+money(v.originalPrice)+'</del> ':'')+'<span class="current-price">'+money(v.price)+'</span>'+(v.onOffer?' <span class="offer-label">'+(v.referenceOnly?'Special price':p.offer.type==='percent'?safe(p.offer.value)+'% OFF':money(p.offer.value)+' OFF')+'</span>':'');}
 function productCard(p){return'<article class="product-card"><a class="product-photo" href="product.html?product='+p.id+'" aria-label="View '+safe(p.title)+'"><img src="'+productImage(p)+'" alt="'+safe(p.title)+'" loading="lazy">'+(p.fresh?'<span class="product-badge">NEW ARRIVAL</span>':'')+'</a><div class="product-info"><div><h2><a href="product.html?product='+p.id+'">'+safe(p.title)+'</a></h2><p class="listing-price">'+priceMarkup(p)+'</p></div><button class="quick-add" data-quick-add="'+p.id+'" aria-label="Add '+safe(p.title)+' to cart" '+(!p.variants?.length?'disabled title="Options coming soon"':'')+'>＋</button></div></article>'}
 
 
