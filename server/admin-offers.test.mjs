@@ -63,3 +63,17 @@ test('Tote price update is atomic, independent and never resets later owner edit
  const later={...records.get('products/MIGRATE-TOTE'),price:180};await refreshPublicCatalogue({collection:'products',id:later.id,record:later});
  assert.equal(await refreshPublicCatalogue({policy:TOTE_PRICE_POLICY_ID}),null);assert.equal(records.get('products/MIGRATE-TOTE').price,180);
 });
+
+test('Cup and reference-price update persists once without changing stock, photos or other selling prices',async()=>{
+ const {refreshPublicCatalogue}=await import('./public-catalogue.mjs'),{REFERENCE_PRICE_POLICY_ID}=await import('./catalogue-policy.mjs');
+ const original={id:'MIGRATE-CUP',baseId:'mug',status:'Active',approved:true,title:'Owner cup',price:1,variants:['Standard'],stock:9,imageSrc:'assets/cup.webp',galleryImages:['assets/cup-back.webp'],offer:{enabled:true,type:'percent',value:10}};
+ records.set('products/MIGRATE-CUP',structuredClone(original));
+ const beforeCase=structuredClone(records.get('products/MIGRATE-CASE'));
+ const result=await refreshPublicCatalogue({policy:REFERENCE_PRICE_POLICY_ID});
+ const cup=records.get('products/MIGRATE-CUP');assert.equal(cup.price,230);assert.equal(cup.referenceMarkupPercent,10);assert.equal(cup.offer,null);
+ assert.equal(result.products.find(p=>p.id===cup.id).price,230);
+ for(const field of ['variants','stock','imageSrc','galleryImages'])assert.deepEqual(cup[field],original[field]);
+ assert.equal(records.get('products/MIGRATE-CASE').price,beforeCase.price);
+ const later={...cup,price:250};await refreshPublicCatalogue({collection:'products',id:cup.id,record:later});
+ assert.equal(await refreshPublicCatalogue({policy:REFERENCE_PRICE_POLICY_ID}),null);assert.equal(records.get('products/MIGRATE-CUP').price,250);
+});
