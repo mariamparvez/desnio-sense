@@ -87,17 +87,20 @@
       "image": "cap",
       "variants": [],
       "colours": [
-        "Dusty pink"
+        "Pink",
+        "Black"
       ],
       "audience": "Women",
       "material": "",
-      "desc": "A dusty-pink cap with burgundy “god forbid a girl be both whimsical and full of rage” lettering across the front. The photographs show a curved brim, panel seams and eyelet details, with close-up and cafe styling views.",
+      "desc": "A cap available in Pink with burgundy lettering or Black with red lettering, featuring “god forbid a girl be both whimsical and full of rage” across the front. The photographs show a curved brim, panel seams and eyelet details, with close-up and cafe styling views.",
       "designer": "",
       "collectionName": "Caps",
       "care": "Material, sizing and care instructions will be confirmed by Desnio Sense.",
       "imageSrc": "assets/merch/product-12/photo-1.webp",
       "galleryImages": [
-        "assets/merch/product-12/photo-2.webp"
+        "assets/merch/product-12/photo-2.webp",
+        "assets/merch/product-12/black-1.webp",
+        "assets/merch/product-12/black-2.webp"
       ],
       "fresh": true,
       "createdAt": "2026-10-10T15:43:14.780Z",
@@ -107,8 +110,18 @@
       "name": "Whimsy & Rage",
       "title": "Whimsy & Rage",
       "price": 126,
-      "updatedAt": "2026-11-05T12:29:31.063Z",
-      "referenceMarkupPercent": 10
+      "updatedAt": "2026-11-06T00:00:00.000Z",
+      "referenceMarkupPercent": 10,
+      "colourImages": {
+        "Pink": [
+          "assets/merch/product-12/photo-1.webp",
+          "assets/merch/product-12/photo-2.webp"
+        ],
+        "Black": [
+          "assets/merch/product-12/black-1.webp",
+          "assets/merch/product-12/black-2.webp"
+        ]
+      }
     },
     {
       "id": "MERCH-13",

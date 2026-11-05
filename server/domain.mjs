@@ -25,7 +25,8 @@ export function priceOrder(cart,products){
   let phoneModel=null;
   if((p.baseId||p.id)==='case'){assert(item.phoneModel&&['Android','iPhone'].includes(item.phoneModel.platform),'Select your exact phone model.');phoneModel={platform:item.phoneModel.platform,brand:text(item.phoneModel.brand,100),name:text(item.phoneModel.name,150),requested:!!item.phoneModel.requested};if(item.phoneModel.id)phoneModel.id=id(item.phoneModel.id);}
   const price=number(pricing.product(p).price,.01,1000000);assert(Math.abs(price*100-Math.round(price*100))<0.00001,'Catalogue price has invalid precision.');
-  return {product:p.id,name:p.title,quantity,price,variant:text(item.variant,180),colour:text(item.colour||'Ivory',50),custom:false,phoneModel,image:image(p.imageSrc||('assets/products/'+p.image+'.jpg'))};
+  const photos=[p.imageSrc,...(p.galleryImages||[])],colourPhoto=p.colourImages?.[item.colour]?.find(src=>photos.includes(src));
+  return {product:p.id,name:p.title,quantity,price,variant:text(item.variant,180),colour:text(item.colour||'Ivory',50),custom:false,phoneModel,image:image(colourPhoto||p.imageSrc||('assets/products/'+p.image+'.jpg'))};
  });
  for(const [product,quantity] of requested){const p=products.find(p=>p.id===product);if(Number.isFinite(p.stock))assert(p.stock>=quantity,'The requested quantity is out of stock.',409);}
  const subtotal=items.reduce((total,i)=>total+i.quantity*Math.round(i.price*100),0)/100;return{items,subtotal,discount:0,shipping:0,total:subtotal};
@@ -47,6 +48,15 @@ export function catalogueRecord(collection,input,recordId){
   assert(!active||price!==null,'Set the product price before publishing.');
   const result={...common,approved,title,name:title,productCode:id(input.productCode||recordId),singular:text(input.singular,100),baseId:base,section:input.section,icon:id(input.icon),image:id(input.image),price,variants:variants.map(v=>text(v,100)),colours:colours.map(v=>text(v,50)),audience,material:text(input.material||'',300,false),desc:text(input.desc||'',2000,active),designer:text(input.designer||'',150,false),collectionName:text(input.collectionName||'',150,false),care:text(input.care||'',2000,false),imageSrc:image(input.imageSrc),galleryImages:(input.galleryImages||[]).slice(0,6).map(image),fresh:!!input.fresh};
   assert(!active||result.imageSrc,'Upload the actual merchandise image before publishing.');
+  if(input.colourImages!=null){
+   assert(typeof input.colourImages==='object'&&!Array.isArray(input.colourImages),'Enter valid colour photos.');
+   const photos=[result.imageSrc,...result.galleryImages];
+   assert(Object.keys(input.colourImages).length<=30,'Too many colour photo groups.');
+   result.colourImages=Object.fromEntries(Object.entries(input.colourImages).filter(([colour])=>result.colours.includes(colour)).map(([colour,images])=>{
+    assert(Array.isArray(images)&&images.length<=7,'Enter valid colour photos.');
+    return [colour,[...new Set(images.map(image).filter(src=>photos.includes(src)))]];
+   }));
+  }
   if(price!==null)assert(Math.abs(price*100-Math.round(price*100))<0.00001,'Use at most two decimal places for price.');
   result.referenceMarkupPercent=10;
   result.offer=offerRecord(input.offer,price);

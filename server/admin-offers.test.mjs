@@ -77,3 +77,15 @@ test('Cup and reference-price update persists once without changing stock, photo
  const later={...cup,price:250};await refreshPublicCatalogue({collection:'products',id:cup.id,record:later});
  assert.equal(await refreshPublicCatalogue({policy:REFERENCE_PRICE_POLICY_ID}),null);assert.equal(records.get('products/MIGRATE-CUP').price,250);
 });
+
+test('Cap colours persist atomically once and later admin changes are never reset',async()=>{
+ const {refreshPublicCatalogue}=await import('./public-catalogue.mjs'),{CAP_COLOURS_POLICY_ID}=await import('./catalogue-policy.mjs');
+ const original={id:'MERCH-12',baseId:'cap',status:'Active',approved:true,title:'Whimsy & Rage',price:126,stock:4,variants:[],colours:['Dusty pink'],imageSrc:'assets/pink.webp',galleryImages:['assets/pink-detail.webp']};
+ records.set('products/MERCH-12',structuredClone(original));const beforeOther=structuredClone(records.get('products/MIGRATE-CUP'));
+ const result=await refreshPublicCatalogue({policy:CAP_COLOURS_POLICY_ID}),cap=records.get('products/MERCH-12');
+ assert.deepEqual(cap.colours,['Pink','Black']);assert.deepEqual(result.products.find(p=>p.id===cap.id).colourImages,cap.colourImages);
+ for(const field of ['price','stock','variants','imageSrc','title'])assert.deepEqual(cap[field],original[field]);
+ assert.deepEqual(records.get('products/MIGRATE-CUP'),beforeOther);assert(records.has('audit/'+CAP_COLOURS_POLICY_ID));
+ const later={...cap,price:130,galleryImages:[...cap.galleryImages].reverse()};await refreshPublicCatalogue({collection:'products',id:cap.id,record:later});
+ assert.equal(await refreshPublicCatalogue({policy:CAP_COLOURS_POLICY_ID}),null);assert.deepEqual(records.get('products/MERCH-12'),later);
+});
