@@ -27,8 +27,10 @@ export function privileges(current,token,directory,user){
 
 export function responseSecurity(res){
  res.setHeader('Cache-Control','no-store');
+ res.setHeader('X-Robots-Tag','noindex, nofollow');
  res.setHeader('X-Content-Type-Options','nosniff');
  res.setHeader('X-Frame-Options','DENY');
  res.setHeader('Content-Type','application/json; charset=utf-8');
 }
+
 

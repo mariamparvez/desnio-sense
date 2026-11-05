@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {offerRecord,pricing} from './offers.mjs';
+import {APPAREL_SIZES,APPAREL_TYPES,CATEGORY_PRICES} from './catalogue-policy.mjs';
 export class AppError extends Error { constructor(message,status=400){super(message);this.status=status;} }
 export function assert(condition,message,status=400){if(!condition)throw new AppError(message,status);}
 export function text(value,max=200,required=true){assert(typeof value==='string','Enter valid text.');const result=value.trim();assert(result.length<=max&&(!required||result.length>0),'A required field is empty or too long.');return result;}
@@ -37,12 +38,12 @@ export function catalogueRecord(collection,input,recordId){
   assert(['Active','Inactive','Draft','Deleted'].includes(common.status),'Invalid product status.');assert(['apparel','accessories','lifestyle','stationery'].includes(input.section),'Choose a store section.');
   const base=id(input.baseId||recordId);assert(['tshirt','jersey','cap','hoodie','sweatshirt','case','tote','bottle','mug','plate','journal','notepad','sticker'].includes(base),'Choose a supported product canvas.');
   const active=common.status==='Active',approved=input.approved===true;
-  const variants=input.variants||[],colours=input.colours||[];
+  const variants=APPAREL_TYPES.includes(base)?[...APPAREL_SIZES]:(input.variants||[]),colours=input.colours||[];
   assert(Array.isArray(variants)&&variants.length<=30,'Enter valid product options.');
   assert(Array.isArray(colours)&&colours.length<=30&&(!active||colours.length>0),'Add product colours before publishing.');
   const audience=text(input.audience||'Unisex',30);assert(['Women','Men','Unisex','Couples','Kids'].includes(audience),'Choose a product audience.');
   assert(!active||approved,'Approve this merchandise before publishing.');
-  const title=text(input.title||'',200,active),price=input.price==null||input.price===''?null:number(input.price,1,1000000);
+  const title=text(input.title||'',200,active),price=input.price==null||input.price===''?(CATEGORY_PRICES[base]??null):number(input.price,1,1000000);
   assert(!active||price!==null,'Set the product price before publishing.');
   const result={...common,approved,title,name:title,productCode:id(input.productCode||recordId),singular:text(input.singular,100),baseId:base,section:input.section,icon:id(input.icon),image:id(input.image),price,variants:variants.map(v=>text(v,100)),colours:colours.map(v=>text(v,50)),audience,material:text(input.material||'',300,false),desc:text(input.desc||'',2000,active),designer:text(input.designer||'',150,false),collectionName:text(input.collectionName||'',150,false),care:text(input.care||'',2000,false),imageSrc:image(input.imageSrc),galleryImages:(input.galleryImages||[]).slice(0,6).map(image),fresh:!!input.fresh};
   assert(!active||result.imageSrc,'Upload the actual merchandise image before publishing.');
@@ -63,4 +64,5 @@ export function corporateEnquiry(input){
  const deadline=text(input.deadline||'',10,false);assert(!deadline||(/^\d{4}-\d{2}-\d{2}$/.test(deadline)&&Number.isFinite(Date.parse(deadline))&&new Date(deadline).toISOString().slice(0,10)===deadline),'Enter a valid delivery date.');
  return{name:text(input.name,100),company:text(input.company,150),email:email(input.email),phone:contact,interest,quantity,city:text(input.city,100),deadline,message:text(input.message,3000),consent:true};
 }
+
 

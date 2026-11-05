@@ -24,3 +24,28 @@ test('Admin cover edits, updates and deletions persist atomically without resett
 
 test('An admin editing an older product cannot overwrite stock reserved by a buyer',async()=>{const source=records.get('products/PRODUCT');records.set('products/PRODUCT',{...source,stock:4});const r=await request('ROOT','catalogue',{collection:'products',id:'PRODUCT',operation:'save',record:{...source,stock:5,stockBaseline:5,price:1500,singular:'T-shirt',section:'apparel',icon:'tshirt',image:'tshirt',audience:'Unisex',desc:'Fixture shirt',designer:'Fixture'}});assert.equal(r.code,409);assert.equal(records.get('products/PRODUCT').stock,4);});
 test('Stock concurrency protection still permits an admin to create a new product',async()=>{const source=records.get('products/PRODUCT'),r=await request('ROOT','catalogue',{collection:'products',id:'NEW-PRODUCT',operation:'save',record:{...source,id:'NEW-PRODUCT',title:'New fixture',productCode:'NEW-PRODUCT',stock:0,stockBaseline:0,singular:'T-shirt',section:'apparel',icon:'tshirt',image:'tshirt',audience:'Unisex',desc:'New fixture shirt',designer:'Fixture'}});assert.equal(r.code,200);assert.equal(records.get('products/NEW-PRODUCT').stock,0);});
+
+
+test('Owner category update persists source records and public pages once without resetting later admin edits',async()=>{
+ const {refreshPublicCatalogue,publicCatalogue}=await import('./public-catalogue.mjs');
+ const {CATALOGUE_POLICY_ID,APPAREL_SIZES}=await import('./catalogue-policy.mjs');
+ const original={id:'MIGRATE-CASE',baseId:'case',status:'Active',approved:true,title:'Owner phone case',price:1,variants:[],stock:8,imageSrc:'assets/back.webp',galleryImages:['assets/front.webp'],desc:'Owner copy',offer:{type:'percent',value:10}};
+ records.set('products/MIGRATE-CASE',structuredClone(original));
+ records.set('products/MIGRATE-SHIRT',{...original,id:'MIGRATE-SHIRT',baseId:'tshirt',price:840});
+ records.set('products/MIGRATE-HOODIE',{...original,id:'MIGRATE-HOODIE',baseId:'hoodie',status:'Draft'});
+ const result=await refreshPublicCatalogue({policy:CATALOGUE_POLICY_ID});
+ assert.equal(records.get('products/MIGRATE-CASE').price,140);
+ assert.equal(records.get('products/MIGRATE-HOODIE').price,840);
+ assert.deepEqual(records.get('products/MIGRATE-SHIRT').variants,[...APPAREL_SIZES]);
+ assert.equal(records.get('products/MIGRATE-SHIRT').price,840);
+ for(const field of ['stock','imageSrc','galleryImages','desc','offer'])assert.deepEqual(records.get('products/MIGRATE-CASE')[field],original[field]);
+ assert(!result.products.some(p=>p.id==='MIGRATE-HOODIE'));
+ const page=records.get('publicCatalogue/current').pages.map(id=>records.get('publicCatalogue/'+id)).flatMap(p=>p.products);
+ assert.equal(page.find(p=>p.id==='MIGRATE-CASE').price,140);
+ const later={...records.get('products/MIGRATE-CASE'),price:175};
+ await refreshPublicCatalogue({collection:'products',id:later.id,record:later});
+ assert.equal(await refreshPublicCatalogue({policy:CATALOGUE_POLICY_ID}),null);
+ assert.equal(records.get('products/MIGRATE-CASE').price,175);
+ assert.equal((await publicCatalogue()).products.find(p=>p.id===later.id).price,175);
+ assert(records.has('audit/'+CATALOGUE_POLICY_ID));
+});

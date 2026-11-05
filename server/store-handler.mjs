@@ -4,6 +4,7 @@ import {AppError,assert,text,email,phone,id,profile,delivery,priceOrder,orderKey
 import {validateRequest,privileges,responseSecurity} from './security.mjs';
 import {couponRecord,couponCode,applyCoupon} from './offers.mjs';
 import {refreshPublicCatalogue} from './public-catalogue.mjs';
+import {submitIndexNow,catalogueChangeUrls} from './indexnow.mjs';
 import {paymentSettings} from './razorpay.mjs';
 import {startTestPayment,verifyTestPayment,testPaymentStatus} from './payments.mjs';
 import {startLivePayment,verifyLivePayment,livePaymentStatus,cancelLiveOrder} from './live-payments.mjs';
@@ -104,7 +105,7 @@ async function dispatch(a,action,data){
   staff(a);assert(['products','phoneModels','jobs'].includes(data.collection),'Unsupported collection.');const recordId=id(data.id),ref=db.doc(data.collection+'/'+recordId);
   assert(['save','delete'].includes(data.operation),'Unsupported catalogue operation.');let record=null;
   if(data.operation==='save'){let input=data.record;if(data.collection==='products'&&!input.productCode){const prior=await ref.get();input={...input,productCode:prior.data()?.productCode||recordId};}record={...catalogueRecord(data.collection,input,recordId),updatedAt:new Date().toISOString()};}
-  const catalogue=await refreshPublicCatalogue({collection:data.collection,id:recordId,record,hasStockBaseline:data.collection==='products'&&Object.hasOwn(data.record||{},'stockBaseline'),stockBaseline:data.record?.stockBaseline??null,requestId:data.requestId?id(data.requestId):null,audit:{id:randomUUID(),actor:a.uid,action:data.collection+':'+data.operation,target:recordId,at:new Date().toISOString()}});return{saved:true,record,catalogue};
+  const catalogue=await refreshPublicCatalogue({collection:data.collection,id:recordId,record,hasStockBaseline:data.collection==='products'&&Object.hasOwn(data.record||{},'stockBaseline'),stockBaseline:data.record?.stockBaseline??null,requestId:data.requestId?id(data.requestId):null,audit:{id:randomUUID(),actor:a.uid,action:data.collection+':'+data.operation,target:recordId,at:new Date().toISOString()}});const indexNow=data.collection==='products'?await submitIndexNow(catalogueChangeUrls(recordId)):{status:'not-applicable'};return{saved:true,record,catalogue,indexNow};
  }
  if(action==='ticket'){
   const ticketId='DS-TK-'+randomUUID(),ticket={id:ticketId,customerId:a.uid,name:text(data.name,100),email:a.email||'',phone:phone(data.phone),category:text(data.category,100),order:text(data.order||'',100,false),message:text(data.message,5000),status:'Open',notes:'',date:new Date().toISOString().slice(0,10),createdAt:stamp()};await db.doc('tickets/'+ticketId).create(ticket);return{ticket:clean(ticket)};
@@ -142,3 +143,4 @@ export default async function handler(req,res){
   const user=await actor(req);await rate(user,action,['ticket','application','model-request'].includes(action)?5:30);await dailyContentLimit(user,action);const result=await dispatch(user,action,body);res.status(200).json(result);
  }catch(error){const status=error instanceof AppError?error.status:error.code?.startsWith('auth/')?400:503;const message=error instanceof AppError?error.message:error.code?.startsWith('auth/')?'The account could not be changed. Check its email and current status.':'The backend could not complete this request. Please retry or contact support.';res.status(status).json({error:message});}
 }
+
