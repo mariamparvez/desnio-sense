@@ -33,8 +33,9 @@ test('Buyer can switch Pink to Black and back, navigate matching photos and keep
  // product.js reads the authoritative public catalogue, not the blank studio templates.
  vm.runInContext('PRODUCTS.splice(0,PRODUCTS.length,...globalThis.PRODUCTS);',context);
  await vm.runInContext(await fs.readFile(new URL('../product.js',import.meta.url),'utf8'),context);
- const buttons=node('#colour-buttons').children;assert.deepEqual(buttons.map(b=>b.textContent),['Pink','Black']);
+ const buttons=node('#colour-buttons').children;assert.deepEqual(buttons.map(b=>b.attributes['aria-label']),['Pink','Black']);
  assert.equal(node('#product-main-photo').src,cap.imageSrc);
+ assert(buttons.every(b=>b.className.includes('colour-swatch')));assert.equal(buttons[0].children[1].textContent,'Pink');assert.equal(buttons[1].children[1].textContent,'Black');
  buttons[1].onclick();assert.equal(node('#product-main-photo').src,product.colourImages.Black[0]);assert.equal(buttons[1].attributes['aria-pressed'],'true');
  node('#gallery-next').onclick();assert.equal(node('#product-main-photo').src,product.colourImages.Black[1]);
  node('#product-add-cart').onclick();assert.equal(cart[0].colour,'Black');assert.equal(cart[0].image,product.colourImages.Black[0]);assert.equal(cart[0].product,cap.id);

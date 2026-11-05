@@ -62,3 +62,15 @@
 .listing-price .original-price{margin-right:0}
 .listing-price .current-price{font-size:14px;color:var(--teal);margin-left:0}
 .listing-price .offer-label{margin-left:0}
+
+/* Filled cap colours retain labels and a visible selected/focus ring. */
+#colour-buttons .colour-swatch{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:9px;min-width:64px;min-height:76px;padding:7px 6px;border:0;border-radius:8px;background:transparent;color:var(--teal)}
+#colour-buttons .colour-swatch-fill{display:block;width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.15);box-sizing:border-box;flex:none;box-shadow:0 0 0 3px white}
+#colour-buttons .colour-swatch--pink .colour-swatch-fill{background:#d8a1ad}
+#colour-buttons .colour-swatch--black .colour-swatch-fill{background:#171717}
+#colour-buttons .colour-swatch.active .colour-swatch-fill{box-shadow:0 0 0 3px white,0 0 0 5px var(--teal)}
+#colour-buttons .colour-swatch-name{font-size:12px;line-height:1.4}
+#colour-buttons .colour-swatch.active .colour-swatch-name{font-weight:600}
+#colour-buttons .colour-swatch:hover{background:var(--ivory)}
+#colour-buttons .colour-swatch:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+@media(forced-colors:active){#colour-buttons .colour-swatch-fill{forced-color-adjust:none}#colour-buttons .colour-swatch[aria-pressed=true]{outline:2px solid Highlight}}
