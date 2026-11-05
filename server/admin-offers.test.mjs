@@ -49,3 +49,17 @@ test('Owner category update persists source records and public pages once withou
  assert.equal((await publicCatalogue()).products.find(p=>p.id===later.id).price,175);
  assert(records.has('audit/'+CATALOGUE_POLICY_ID));
 });
+
+test('Tote price update is atomic, independent and never resets later owner edits',async()=>{
+ const {refreshPublicCatalogue}=await import('./public-catalogue.mjs');const {TOTE_PRICE_POLICY_ID}=await import('./catalogue-policy.mjs');
+ const original={id:'MIGRATE-TOTE',baseId:'tote',status:'Active',approved:true,title:'Owner tote',price:1,variants:['Standard'],stock:9,imageSrc:'assets/tote.webp',galleryImages:['assets/tote-back.webp'],offer:null};
+ records.set('products/MIGRATE-TOTE',structuredClone(original));
+ const beforeCase=structuredClone(records.get('products/MIGRATE-CASE'));
+ const result=await refreshPublicCatalogue({policy:TOTE_PRICE_POLICY_ID});
+ assert.equal(records.get('products/MIGRATE-TOTE').price,150);
+ assert.equal(result.products.find(p=>p.id===original.id).price,150);
+ for(const field of ['variants','stock','imageSrc','galleryImages','offer'])assert.deepEqual(records.get('products/MIGRATE-TOTE')[field],original[field]);
+ assert.deepEqual(records.get('products/MIGRATE-CASE'),beforeCase);
+ const later={...records.get('products/MIGRATE-TOTE'),price:180};await refreshPublicCatalogue({collection:'products',id:later.id,record:later});
+ assert.equal(await refreshPublicCatalogue({policy:TOTE_PRICE_POLICY_ID}),null);assert.equal(records.get('products/MIGRATE-TOTE').price,180);
+});
