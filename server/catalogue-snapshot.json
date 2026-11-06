@@ -29,7 +29,7 @@
       "title": "Better Together Duo",
       "offer": null,
       "material": "Cotton",
-      "price": 840,
+      "price": 360,
       "designer": "Mariam",
       "stock": 8,
       "variants": [
@@ -41,7 +41,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.469Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -383,7 +383,7 @@
       "fresh": true,
       "createdAt": "2026-10-10T15:43:12.407Z",
       "approved": true,
-      "price": 1,
+      "price": 360,
       "status": "Active",
       "productCode": "womens_tshirt_2_10102026",
       "name": "Lunar Drama",
@@ -397,7 +397,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -792,7 +792,7 @@
       "fresh": true,
       "createdAt": "2026-10-10T15:43:12.747Z",
       "approved": true,
-      "price": 1,
+      "price": 360,
       "status": "Active",
       "productCode": "womens_tshirt_3_10102026",
       "name": "Rose Riot",
@@ -806,7 +806,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -855,7 +855,7 @@
       "section": "apparel",
       "icon": "tshirt",
       "image": "tshirt",
-      "price": 1,
+      "price": 360,
       "colours": [
         "Heather grey"
       ],
@@ -884,7 +884,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -898,7 +898,7 @@
       "baseId": "tshirt",
       "section": "apparel",
       "image": "tshirt",
-      "price": 1,
+      "price": 360,
       "colours": [
         "Black"
       ],
@@ -928,7 +928,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -992,7 +992,7 @@
       "fresh": true,
       "createdAt": "2026-10-10T15:43:13.016Z",
       "approved": true,
-      "price": 1,
+      "price": 360,
       "status": "Active",
       "productCode": "womens_crop_tshirt_4_10102026",
       "name": "Too Much",
@@ -1006,7 +1006,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -1075,7 +1075,7 @@
       "fresh": true,
       "createdAt": "2026-10-10T15:43:13.537Z",
       "approved": true,
-      "price": 1,
+      "price": 360,
       "status": "Active",
       "productCode": "mens_tshirt_6_10102026",
       "name": "Flashpoint",
@@ -1089,7 +1089,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {
@@ -1117,7 +1117,7 @@
       "fresh": true,
       "createdAt": "2026-10-10T15:43:13.815Z",
       "approved": true,
-      "price": 1,
+      "price": 360,
       "status": "Active",
       "productCode": "mens_tshirt_7_10102026",
       "name": "Rupee Remix",
@@ -1131,7 +1131,7 @@
         "2XL",
         "3XL"
       ],
-      "updatedAt": "2026-11-05T12:29:31.063Z",
+      "updatedAt": "2026-11-06T10:42:59.484Z",
       "referenceMarkupPercent": 10
     },
     {

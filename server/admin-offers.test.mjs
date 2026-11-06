@@ -89,3 +89,15 @@ test('Cap colours persist atomically once and later admin changes are never rese
  const later={...cap,price:130,galleryImages:[...cap.galleryImages].reverse()};await refreshPublicCatalogue({collection:'products',id:cap.id,record:later});
  assert.equal(await refreshPublicCatalogue({policy:CAP_COLOURS_POLICY_ID}),null);assert.deepEqual(records.get('products/MERCH-12'),later);
 });
+
+test('T-shirt pricing persists once, preserves inventory/photos/sizes and allows subsequent admin edits',async()=>{
+ const {refreshPublicCatalogue}=await import('./public-catalogue.mjs'),{TSHIRT_PRICE_POLICY_ID}=await import('./catalogue-policy.mjs');
+ const original={id:'TSHIRT-UPDATE',baseId:'tshirt',status:'Active',approved:true,title:'Owner T-shirt',price:840,stock:8,variants:['XS','S','M','L','XL','2XL','3XL'],imageSrc:'assets/back.webp',galleryImages:['assets/front.webp'],colours:['Black'],referenceMarkupPercent:10};
+ records.set('products/'+original.id,structuredClone(original));const cap=structuredClone(records.get('products/MERCH-12'));
+ const result=await refreshPublicCatalogue({policy:TSHIRT_PRICE_POLICY_ID}),saved=records.get('products/'+original.id);
+ assert.equal(saved.price,360);assert.equal(result.products.find(p=>p.id===original.id).price,360);
+ for(const field of ['stock','variants','imageSrc','galleryImages','colours','title'])assert.deepEqual(saved[field],original[field]);
+ assert.deepEqual(records.get('products/MERCH-12'),cap);
+ const later={...saved,price:400};await refreshPublicCatalogue({collection:'products',id:saved.id,record:later});
+ assert.equal(await refreshPublicCatalogue({policy:TSHIRT_PRICE_POLICY_ID}),null);assert.equal(records.get('products/'+original.id).price,400);
+});
